@@ -49,7 +49,7 @@ public class Filme {
 
     @Getter
     @Setter
-    @OneToMany
+    @OneToMany(mappedBy = "filmeId")
     private List<Avaliacao> avaliacoes;
 
     public Filme() { }

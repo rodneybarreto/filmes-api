@@ -3,6 +3,10 @@ package br.uece.eescomdevops.filmesapi.controller.dto;
 import br.uece.eescomdevops.filmesapi.model.Filme;
 import lombok.Getter;
 
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
+
 @Getter
 public class FilmeDto {
 
@@ -12,6 +16,7 @@ public class FilmeDto {
     private String anoLancamento;
     private String produtores;
     private String protagonistas;
+    private List<AvaliacaoDto> avaliacoes;
 
     public FilmeDto(Filme filme) {
         this.id = filme.getId().toString();
@@ -20,6 +25,7 @@ public class FilmeDto {
         this.anoLancamento = filme.getAnoLancamento();
         this.produtores = filme.getProdutores();
         this.protagonistas = filme.getProtagonistas();
+        this.avaliacoes = filme.getAvaliacoes().stream().map(AvaliacaoDto::new).collect(toList());
     }
 
 }
