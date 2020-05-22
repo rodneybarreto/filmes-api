@@ -18,6 +18,8 @@ public class FilmeDto {
     private String protagonistas;
     private List<AvaliacaoDto> avaliacoes;
 
+    public FilmeDto() { }
+
     public FilmeDto(Filme filme) {
         this.id = filme.getId().toString();
         this.titulo = filme.getTitulo();
