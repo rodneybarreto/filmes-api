@@ -67,9 +67,9 @@ public class FilmeController {
     }
 
     @Transactional
-    @PutMapping(consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity update(@RequestBody FilmeDto filmeDto) {
-        Optional<Filme> optional = filmeRepository.findById(Long.parseLong(filmeDto.getId()));
+    @PutMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity update(@PathVariable Long id, @RequestBody FilmeDto filmeDto) {
+        Optional<Filme> optional = filmeRepository.findById(id);
         if (optional.isPresent()) {
             Filme filme = optional.get();
             filme.setTitulo(filmeDto.getTitulo());
