@@ -10,6 +10,5 @@ public record FilmeReq (
         String sinopse,
 
         @JsonAlias("ano_lancamento")
-        Integer anoLancamento
-) {
+        Integer anoLancamento) {
 }

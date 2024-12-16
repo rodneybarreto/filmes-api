@@ -2,22 +2,23 @@ package br.uece.eescomdevops.filmesapi.controller;
 
 import br.uece.eescomdevops.filmesapi.domain.dto.FilmeDto;
 import br.uece.eescomdevops.filmesapi.domain.dto.FilmeReq;
+import br.uece.eescomdevops.filmesapi.domain.dto.FilmeRes;
 import br.uece.eescomdevops.filmesapi.domain.entity.Filme;
 import br.uece.eescomdevops.filmesapi.repository.FilmeRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
-import static java.util.stream.Collectors.toList;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.util.ObjectUtils.isEmpty;
 
 @RestController
 @RequestMapping(FilmeController.RESOURCE)
@@ -41,12 +42,9 @@ public class FilmeController {
     }
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<FilmeDto>> findAll() {
-        List<Filme> filmes = filmeRepository.findAll();
-        if (isEmpty(filmes)) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(filmes.stream().map(FilmeDto::new).collect(toList()));
+    public ResponseEntity<Page<FilmeRes>> findAll(@PageableDefault(sort = {"titulo"}) Pageable pageable) {
+        Page<Filme> filmesPage = filmeRepository.findAll(pageable);
+        return ResponseEntity.ok(filmesPage.map(FilmeRes::new));
     }
 
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
