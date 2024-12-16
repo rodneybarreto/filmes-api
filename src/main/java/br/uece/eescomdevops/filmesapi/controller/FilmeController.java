@@ -1,10 +1,10 @@
 package br.uece.eescomdevops.filmesapi.controller;
 
-import br.uece.eescomdevops.filmesapi.domain.dto.FilmeDto;
 import br.uece.eescomdevops.filmesapi.domain.dto.FilmeReq;
 import br.uece.eescomdevops.filmesapi.domain.dto.FilmeRes;
 import br.uece.eescomdevops.filmesapi.domain.entity.Filme;
 import br.uece.eescomdevops.filmesapi.repository.FilmeRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -48,23 +47,25 @@ public class FilmeController {
     }
 
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<FilmeDto> findById(@PathVariable Long id) {
-        Optional<Filme> optional = filmeRepository.findById(id);
-        if (!optional.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(new FilmeDto(optional.get()));
+    public ResponseEntity<FilmeRes> findById(@PathVariable Long id) {
+        Filme filme = filmeRepository.getReferenceById(id);
+        return ResponseEntity.ok(new FilmeRes(filme));
+    }
+
+    @Transactional
+    @PutMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<FilmeReq> update(@PathVariable Long id, @Valid @RequestBody FilmeReq filmeReq) {
+        Filme filme = filmeRepository.getReferenceById(id);
+        filme.update(filmeReq);
+        return ResponseEntity.ok(filmeReq);
     }
 
     @Transactional
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity delete(@PathVariable Long id) {
-        Optional<Filme> filme = filmeRepository.findById(id);
-        if (filme.isPresent()) {
-            filmeRepository.delete(filme.get());
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        Filme filme = filmeRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        filmeRepository.delete(filme);
+        return ResponseEntity.noContent().build();
     }
 
 }

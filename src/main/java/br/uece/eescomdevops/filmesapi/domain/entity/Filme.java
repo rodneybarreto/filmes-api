@@ -2,9 +2,12 @@ package br.uece.eescomdevops.filmesapi.domain.entity;
 
 import br.uece.eescomdevops.filmesapi.domain.dto.FilmeReq;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import static java.util.Objects.nonNull;
 
 @Getter
 @Entity
@@ -29,6 +32,18 @@ public class Filme {
         this.titulo = filmeReq.titulo();
         this.sinopse = filmeReq.sinopse();
         this.anoLancamento = filmeReq.anoLancamento();
+    }
+
+    public void update(@Valid FilmeReq filmeReq) {
+        if (nonNull(filmeReq.titulo())) {
+            this.titulo = filmeReq.titulo();
+        }
+        if (nonNull(filmeReq.sinopse())) {
+            this.sinopse = filmeReq.sinopse();
+        }
+        if (nonNull(filmeReq.anoLancamento())) {
+            this.anoLancamento = filmeReq.anoLancamento();
+        }
     }
 
 }
