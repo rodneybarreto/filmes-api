@@ -1,13 +1,15 @@
 package br.uece.eescomdevops.filmesapi.controller;
 
-import br.uece.eescomdevops.filmesapi.controller.dto.FilmeDto;
-import br.uece.eescomdevops.filmesapi.model.Filme;
+import br.uece.eescomdevops.filmesapi.domain.dto.FilmeDto;
+import br.uece.eescomdevops.filmesapi.domain.entity.Filme;
 import br.uece.eescomdevops.filmesapi.repository.FilmeRepository;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.transaction.Transactional;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -17,20 +19,28 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping(FilmeController.RESOURCE)
 public class FilmeController {
 
     protected static final String RESOURCE = "/v1/filmes";
 
-    private FilmeRepository filmeRepository;
+    private final FilmeRepository filmeRepository;
 
+    @Autowired
     public FilmeController(FilmeRepository filmeRepository) {
         this.filmeRepository = filmeRepository;
     }
 
+    @Transactional
+    @PostMapping(consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity create(@Valid @RequestBody FilmeDto filmeDto, UriComponentsBuilder uriComponentsBuilder) {
+        Filme filme = filmeRepository.save(new Filme(filmeDto));
+        URI uri = uriComponentsBuilder.path(RESOURCE + "/{id}").buildAndExpand(filme.getId()).toUri();
+        return ResponseEntity.created(uri).build();
+    }
+
     @GetMapping(produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<FilmeDto>> getAll() {
+    public ResponseEntity<List<FilmeDto>> findAll() {
         List<Filme> filmes = filmeRepository.findAll();
         if (isEmpty(filmes)) {
             return ResponseEntity.noContent().build();
@@ -39,20 +49,12 @@ public class FilmeController {
     }
 
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<FilmeDto> getById(@PathVariable Long id) {
+    public ResponseEntity<FilmeDto> findById(@PathVariable Long id) {
         Optional<Filme> optional = filmeRepository.findById(id);
         if (!optional.isPresent()) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(new FilmeDto(optional.get()));
-    }
-
-    @Transactional
-    @PostMapping(consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity create(@RequestBody FilmeDto filmeDto, UriComponentsBuilder uriComponentsBuilder) {
-        Filme filme = filmeRepository.save(new Filme(filmeDto));
-        URI uri = uriComponentsBuilder.path(RESOURCE + "/{id}").buildAndExpand(filme.getId()).toUri();
-        return ResponseEntity.created(uri).build();
     }
 
     @Transactional
@@ -64,23 +66,6 @@ public class FilmeController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
-    }
-
-    @Transactional
-    @PutMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity update(@PathVariable Long id, @RequestBody FilmeDto filmeDto) {
-        Optional<Filme> optional = filmeRepository.findById(id);
-        if (optional.isPresent()) {
-            Filme filme = optional.get();
-            filme.setTitulo(filmeDto.getTitulo());
-            filme.setSinopse(filmeDto.getSinopse());
-            filme.setAnoLancamento(filmeDto.getAnoLancamento());
-            filme.setProdutores(filmeDto.getProdutores());
-            filme.setProtagonistas(filmeDto.getProtagonistas());
-            filmeRepository.save(filme);
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.badRequest().build();
     }
 
 }

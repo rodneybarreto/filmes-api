@@ -1,0 +1,21 @@
+services:
+    filmesdb:
+        image: mariadb:10.11
+        restart: always
+        ports:
+            - "3306:3306"
+        environment:
+            - MARIADB_DATABASE=filmesdb
+            - MARIADB_USER=filmesuser
+            - MARIADB_PASSWORD=filmespass
+            - MARIADB_ROOT_PASSWORD=root
+        volumes:
+            - /home/rodney/databases/mariadb:/var/lib/mysql
+        expose:
+            - 3306
+        networks:
+            - filmes-net
+
+networks:
+    filmes-net:
+        driver: bridge

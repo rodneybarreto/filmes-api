@@ -1,0 +1,19 @@
+server:
+    port: 8081
+    servlet:
+        context-path: /filmes-api
+    error:
+        include-stacktrace: never
+
+spring:
+    profiles:
+        active: dev
+    datasource:
+        url: jdbc:mariadb://localhost:3306/filmesdb
+        username: filmesuser
+        password: filmespass
+    jpa:
+        show-sql: true
+        properties:
+            hibernate:
+                format_sql: true
