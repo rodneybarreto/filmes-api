@@ -1,6 +1,7 @@
 package br.uece.eescomdevops.filmesapi.controller;
 
 import br.uece.eescomdevops.filmesapi.domain.dto.FilmeDto;
+import br.uece.eescomdevops.filmesapi.domain.dto.FilmeReq;
 import br.uece.eescomdevops.filmesapi.domain.entity.Filme;
 import br.uece.eescomdevops.filmesapi.repository.FilmeRepository;
 import jakarta.validation.Valid;
@@ -33,8 +34,8 @@ public class FilmeController {
 
     @Transactional
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity create(@Valid @RequestBody FilmeDto filmeDto, UriComponentsBuilder uriComponentsBuilder) {
-        Filme filme = filmeRepository.save(new Filme(filmeDto));
+    public ResponseEntity<Void> create(@Valid @RequestBody FilmeReq filmeReq, UriComponentsBuilder uriComponentsBuilder) {
+        Filme filme = filmeRepository.save(new Filme(filmeReq));
         URI uri = uriComponentsBuilder.path(RESOURCE + "/{id}").buildAndExpand(filme.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }

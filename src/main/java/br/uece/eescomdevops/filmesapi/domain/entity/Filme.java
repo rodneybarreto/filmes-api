@@ -1,6 +1,6 @@
 package br.uece.eescomdevops.filmesapi.domain.entity;
 
-import br.uece.eescomdevops.filmesapi.domain.dto.FilmeDto;
+import br.uece.eescomdevops.filmesapi.domain.dto.FilmeReq;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,10 +25,10 @@ public class Filme {
     @Column(name = "ano_lancamento")
     private Integer anoLancamento;
 
-    public Filme(FilmeDto filmeDto) {
-        this.titulo = filmeDto.getTitulo();
-        this.sinopse = filmeDto.getSinopse();
-        this.anoLancamento = filmeDto.getAnoLancamento();
+    public Filme(FilmeReq filmeReq) {
+        this.titulo = filmeReq.titulo();
+        this.sinopse = filmeReq.sinopse();
+        this.anoLancamento = filmeReq.anoLancamento();
     }
 
 }
