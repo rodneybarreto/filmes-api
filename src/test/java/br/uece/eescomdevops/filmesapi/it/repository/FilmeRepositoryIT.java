@@ -45,6 +45,20 @@ class FilmeRepositoryIT {
     }
 
     @Test
+    @DisplayName("Deve cadastrar um novo filme")
+    void create() {
+        Filme filme = new Filme(new FilmeReq("O Exterminador do Futuro", "Um assassino ciborgue do futuro tenta encontrar e matar Sarah Connor...", 1984));
+
+        filmeRepository.save(filme);
+        List<Filme> filmes = filmeRepository.findAll();
+        Filme filmeExterminador = filmes.stream().filter(f -> f.getTitulo().equals("O Exterminador do Futuro")).toList().get(0);
+
+        Assertions.assertEquals(3, filmes.size());
+        Assertions.assertEquals("O Exterminador do Futuro", filmeExterminador.getTitulo());
+    }
+
+
+    @Test
     @DisplayName("Deve listar os filmes cadastrados")
     void findAll() {
         Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, "titulo"));
