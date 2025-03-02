@@ -50,9 +50,9 @@ public class FilmeController {
     }
 
     @PutMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<FilmeReq> update(@PathVariable Long id, @Valid @RequestBody FilmeReq filmeReq) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @Valid @RequestBody FilmeReq filmeReq) {
         filmeService.update(id, filmeReq);
-        return ResponseEntity.ok(filmeReq);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping(value = "/{id}")
