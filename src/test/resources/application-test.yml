@@ -6,3 +6,5 @@ spring:
         url: jdbc:h2:mem:filmesdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false;MODE=MYSQL
         username: sa
         password:
+    jpa:
+        show-sql: true
