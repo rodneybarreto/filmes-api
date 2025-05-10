@@ -1,4 +1,4 @@
-package br.uece.eescomdevops.filmesapi.domain.dto;
+package br.uece.eescomdevops.filmesapi.adapters.inbound.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import jakarta.validation.constraints.NotBlank;

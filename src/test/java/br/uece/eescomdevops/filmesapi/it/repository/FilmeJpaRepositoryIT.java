@@ -1,0 +1,73 @@
+//package br.uece.eescomdevops.filmesapi.it.repository;
+//
+//import br.uece.eescomdevops.filmesapi.adapters.outbound.entity.FilmeJpaEntity;
+//import br.uece.eescomdevops.filmesapi.adapters.outbound.database.repository.FilmeJpaRepository;
+//import br.uece.eescomdevops.filmesapi.domain.dto.FilmeReq;
+//import br.uece.eescomdevops.filmesapi.domain.entity.Filme;
+//import org.junit.jupiter.api.Assertions;
+//import org.junit.jupiter.api.BeforeEach;
+//import org.junit.jupiter.api.DisplayName;
+//import org.junit.jupiter.api.Test;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+//import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+//import org.springframework.data.domain.Page;
+//import org.springframework.data.domain.PageRequest;
+//import org.springframework.data.domain.Pageable;
+//import org.springframework.data.domain.Sort;
+//import org.springframework.test.context.ActiveProfiles;
+//
+//import java.util.List;
+//
+//@DataJpaTest
+//@ActiveProfiles("test")
+//class FilmeJpaRepositoryIT {
+//
+//    @Autowired
+//    private TestEntityManager testEntityManager;
+//
+//    @Autowired
+//    private FilmeJpaRepository filmeJpaRepository;
+//
+//    @BeforeEach
+//    void before() {
+//        FilmeReq filmeReq1 = new FilmeReq(
+//                "O Incrível Hulk",
+//                "Bruce Banner é um cientista que foge do governo dos Estados Unidos.",
+//                2008
+//        );
+//        FilmeReq filmeReq2 = new FilmeReq(
+//                "Capitão América: O Soldado Invernal",
+//                "Steve Roger se junta com a Viúva Negra para tentar deter uma nouva ameaça, um assasino conhecido como Soldado Invernal.",
+//                2014
+//        );
+//        testEntityManager.persistAndFlush(new Filme(filmeReq1));
+//        testEntityManager.persistAndFlush(new Filme(filmeReq2));
+//    }
+//
+//    @Test
+//    @DisplayName("Deve cadastrar um novo filme")
+//    void create() {
+//        Filme filme = new Filme(new FilmeReq("O Exterminador do Futuro", "Um assassino ciborgue do futuro tenta encontrar e matar Sarah Connor...", 1984));
+//
+//        filmeJpaRepository.save(filme);
+//        List<Filme> filmes = filmeJpaRepository.findAll();
+//        Filme filmeExterminador = filmes.stream().filter(f -> f.getTitulo().equals("O Exterminador do Futuro")).toList().get(0);
+//
+//        Assertions.assertEquals(3, filmes.size());
+//        Assertions.assertEquals("O Exterminador do Futuro", filmeExterminador.getTitulo());
+//    }
+//
+//
+//    @Test
+//    @DisplayName("Deve listar os filmes cadastrados")
+//    void findAll() {
+//        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, "titulo"));
+//        Page<FilmeJpaEntity> filmePage = filmeJpaRepository.findAll(pageable);
+//        List<FilmeJpaEntity> filmes = filmePage.getContent();
+//
+//        Assertions.assertEquals(2, filmes.size());
+//        Assertions.assertEquals("Capitão América: O Soldado Invernal", filmes.get(0).getTitulo());
+//    }
+//
+//}

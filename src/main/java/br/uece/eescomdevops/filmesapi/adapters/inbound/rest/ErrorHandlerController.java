@@ -1,6 +1,6 @@
-package br.uece.eescomdevops.filmesapi.base.controller;
+package br.uece.eescomdevops.filmesapi.adapters.inbound.rest;
 
-import br.uece.eescomdevops.filmesapi.base.dto.ErrorValidationRes;
+import br.uece.eescomdevops.filmesapi.adapters.inbound.dto.ErrorValidationRes;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

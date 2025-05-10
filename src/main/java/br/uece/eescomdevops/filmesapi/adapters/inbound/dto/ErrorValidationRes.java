@@ -1,4 +1,4 @@
-package br.uece.eescomdevops.filmesapi.base.dto;
+package br.uece.eescomdevops.filmesapi.adapters.inbound.dto;
 
 import org.springframework.validation.FieldError;
 

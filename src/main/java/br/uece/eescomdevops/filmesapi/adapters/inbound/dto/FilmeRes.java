@@ -1,6 +1,6 @@
-package br.uece.eescomdevops.filmesapi.domain.dto;
+package br.uece.eescomdevops.filmesapi.adapters.inbound.dto;
 
-import br.uece.eescomdevops.filmesapi.domain.entity.Filme;
+import br.uece.eescomdevops.filmesapi.application.core.domain.entity.Filme;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record FilmeRes(
