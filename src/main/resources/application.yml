@@ -18,3 +18,6 @@ spring:
         properties:
             hibernate:
                 format_sql: false
+                transaction:
+                    jta:
+                        platform: false
