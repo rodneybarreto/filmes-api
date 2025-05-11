@@ -23,7 +23,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(FilmeController.RESOURCE)
-@CrossOrigin(origins = "http://localhost", allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class FilmeController {
 
     protected static final String RESOURCE = "/v1/filmes";
