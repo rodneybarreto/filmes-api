@@ -1,0 +1,1 @@
+DELETE FROM filmes WHERE id = 1;

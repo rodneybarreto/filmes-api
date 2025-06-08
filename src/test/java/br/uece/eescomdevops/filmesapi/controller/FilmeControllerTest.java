@@ -1,16 +1,14 @@
 //package br.uece.eescomdevops.filmesapi.controller;
 //
-//import br.uece.eescomdevops.filmesapi.adapters.inbound.controller.FilmeController;
-//import br.uece.eescomdevops.filmesapi.application.service.FilmeService;
-//import br.uece.eescomdevops.filmesapi.domain.dto.FilmeReq;
-//import br.uece.eescomdevops.filmesapi.domain.dto.FilmeRes;
+//import br.uece.eescomdevops.filmesapi.adapters.inbound.dto.FilmeReq;
+//import br.uece.eescomdevops.filmesapi.adapters.inbound.dto.FilmeRes;
 //import jakarta.persistence.EntityNotFoundException;
 //import org.junit.jupiter.api.DisplayName;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
 //import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-//import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+//import org.springframework.boot.test.context.SpringBootTest;
 //import org.springframework.boot.test.json.JacksonTester;
 //import org.springframework.data.domain.Page;
 //import org.springframework.data.domain.PageImpl;
@@ -19,7 +17,7 @@
 //import org.springframework.http.HttpStatus;
 //import org.springframework.http.MediaType;
 //import org.springframework.mock.web.MockHttpServletResponse;
-//import org.springframework.test.context.bean.override.mockito.MockitoBean;
+//import org.springframework.test.context.ActiveProfiles;
 //import org.springframework.test.web.servlet.MockMvc;
 //
 //import java.util.List;
@@ -32,10 +30,10 @@
 //import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 //import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 //
-//
+//@SpringBootTest
 //@AutoConfigureMockMvc
 //@AutoConfigureJsonTesters
-//@WebMvcTest(FilmeController.class)
+//@ActiveProfiles("test")
 //class FilmeControllerTest {
 //
 //    @Autowired
@@ -50,54 +48,8 @@
 //    @Autowired
 //    private JacksonTester<Page<FilmeRes>> filmeRespPageJson;
 //
-//    @MockitoBean
-//    private FilmeService filmeService;
-//
-//    @Test
-//    @DisplayName("Deve cadastrar um novo filme")
-//    void filme_cenario1() throws Exception {
-//        FilmeReq filmeReq = new FilmeReq(
-//                "O Incrível Hulk",
-//                "Bruce Banner é um cientista que foge do governo dos Estados Unidos.",
-//                2008
-//        );
-//
-//        when(filmeService.create(filmeReq)).thenReturn(1L);
-//
-//        MockHttpServletResponse response = mockMvc.perform(
-//                        post("/v1/filmes")
-//                                .contentType(MediaType.APPLICATION_JSON)
-//                                .content(filmeReqJson.write(filmeReq).getJson())
-//                )
-//                .andDo(print())
-//                .andReturn()
-//                .getResponse();
-//
-//        assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
-//        assertThat(response.getHeader("location")).isEqualTo("http://localhost/v1/filmes/1");
-//    }
-//
-//    @Test
-//    @DisplayName("Deve retornar erro 400 ao tentar cadastrar um novo filme sem um título")
-//    void filme_cenario2() throws Exception {
-//        FilmeReq filmeReq = new FilmeReq(
-//                "",
-//                "Bruce Banner é um cientista que foge do governo dos Estados Unidos.",
-//                2008
-//        );
-//
-//        MockHttpServletResponse response = mockMvc.perform(
-//                        post("/v1/filmes")
-//                                .contentType(MediaType.APPLICATION_JSON)
-//                                .content(filmeReqJson.write(filmeReq).getJson())
-//                )
-//                .andDo(print())
-//                .andReturn()
-//                .getResponse();
-//
-//        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
-//        assertThat(response.getContentAsString()).contains("\"field\":\"titulo\",\"error\":\"must not be blank\"");
-//    }
+
+
 //
 //    @Test
 //    @DisplayName("Deve retornar os filmes paginados")
@@ -121,33 +73,8 @@
 //        //assertThat(response.getContentAsString()).contains(filmeRespPageJson.write(page).getJson());
 //    }
 //
-//    @Test
-//    @DisplayName("Deve retornar um filme pelo ID")
-//    void filme_cenario4() throws Exception {
-//        FilmeRes filmeResp = new FilmeRes(1L, "O Incrível Hulk", "sinopse", 2008);
-//        when(filmeService.findById(1L)).thenReturn(filmeResp);
 //
-//        MockHttpServletResponse response = mockMvc.perform(get("/v1/filmes/1"))
-//                .andDo(print())
-//                .andReturn()
-//                .getResponse();
-//
-//        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-//        assertThat(response.getContentAsString()).isEqualTo(filmeRespJson.write(filmeResp).getJson());
-//    }
-//
-//    @Test
-//    @DisplayName("Deve retornar NOT FOUND quando não encontrar filme pelo ID")
-//    void filme_cenario5() throws Exception {
-//        doThrow(new EntityNotFoundException()).when(filmeService).findById(anyLong());
-//
-//        MockHttpServletResponse response = mockMvc.perform(get("/v1/filmes/1"))
-//                .andDo(print())
-//                .andReturn()
-//                .getResponse();
-//
-//        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
-//    }
+
 //
 //    @Test
 //    @DisplayName("Deve atualizar um filme")
