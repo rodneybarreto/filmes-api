@@ -23,8 +23,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @SpringBootTest
@@ -118,6 +117,23 @@ class FilmeControllerIT {
                 .getResponse();
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
+    @DisplayName("Deve atualizar um filme")
+    void filme_cenario6() throws Exception {
+        FilmeReq filmeReqPut = new FilmeReq("Novo Título", "Nova Sinopse", 2023);
+
+        MockHttpServletResponse response = mockMvc.perform(
+                    put("/v1/filmes/1")
+                            .contentType(APPLICATION_JSON)
+                            .content(filmeReqJson.write(filmeReqPut).getJson())
+                )
+                .andDo(print())
+                .andReturn()
+                .getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
     }
 
 }
