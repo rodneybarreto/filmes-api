@@ -1,5 +1,5 @@
 services:
-    filmesdb:
+    filmesdb-serv:
         image: mariadb:10.11
         restart: always
         ports:
@@ -8,13 +8,31 @@ services:
             - MARIADB_DATABASE=filmesdb
             - MARIADB_USER=filmesuser
             - MARIADB_PASSWORD=filmespass
-            - MARIADB_ROOT_PASSWORD=root
+            - MARIADB_ROOT_PASSWORD=admin@123
+            - TZ=America/Sao_Paulo
         volumes:
             - /home/rodney/databases/mariadb:/var/lib/mysql
         expose:
             - 3306
         networks:
             - filmes-net
+
+#    filmes-api:
+#        image: rodneybarreto/filmes-api:0.0.1
+#        restart: always
+#        environment:
+#            - LOG_PATH=./logs
+#            - PORT=8081
+#            - TZ=America/Sao_Paulo
+#            - DB_HOST=filmesdb-serv
+#        volumes:
+#            - "./logs:/opt/filmes-api/logs"
+#        ports:
+#            - "8081:8081"
+#        depends_on:
+#            - filmesdb-serv
+#        networks:
+#            - filmes-net
 
 networks:
     filmes-net:

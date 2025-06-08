@@ -10,7 +10,7 @@ spring:
         active: dev
     datasource:
         driver-class-name: org.mariadb.jdbc.Driver
-        url: jdbc:mariadb://localhost:3306/filmesdb
+        url: jdbc:mariadb://${DB_HOST:localhost}:3306/filmesdb
         username: filmesuser
         password: filmespass
     jpa:
