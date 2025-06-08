@@ -3,6 +3,8 @@ package br.uece.eescomdevops.filmesapi.integrationtest.adapters.inbound.rest;
 import br.uece.eescomdevops.filmesapi.adapters.inbound.dto.ErrorValidationRes;
 import br.uece.eescomdevops.filmesapi.adapters.inbound.dto.FilmeReq;
 import br.uece.eescomdevops.filmesapi.adapters.inbound.dto.FilmeRes;
+import br.uece.eescomdevops.filmesapi.adapters.inbound.dto.PageRes;
+import br.uece.eescomdevops.filmesapi.application.core.domain.entity.Filme;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,6 +47,9 @@ class FilmeControllerIT {
 
     @Autowired
     private JacksonTester<List<ErrorValidationRes>> errorValidationResJson;
+
+    @Autowired
+    private JacksonTester<PageRes<Filme>> pageResJson;
 
     private FilmeReq filmeReq;
 
@@ -121,7 +126,7 @@ class FilmeControllerIT {
 
     @Test
     @DisplayName("Deve atualizar um filme")
-    void filme_cenario6() throws Exception {
+    void filme_cenario5() throws Exception {
         FilmeReq filmeReqPut = new FilmeReq("Novo Título", "Nova Sinopse", 2023);
 
         MockHttpServletResponse response = mockMvc.perform(
@@ -134,6 +139,33 @@ class FilmeControllerIT {
                 .getResponse();
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
+    }
+
+    @Test
+    @DisplayName("Deve deletar um filme pelo ID")
+    void filme_cenario6() throws Exception {
+        MockHttpServletResponse response = mockMvc.perform(delete("/v1/filmes/1"))
+                .andDo(print())
+                .andReturn()
+                .getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
+    }
+
+    @Test
+    @DisplayName("Deve retornar os filmes paginados")
+    void filme_cenario7() throws Exception {
+        MockHttpServletResponse response = mockMvc.perform(get("/v1/filmes?page=0&size=10"))
+                .andDo(print())
+                .andReturn()
+                .getResponse();
+
+        PageRes<Filme> page = pageResJson.parseObject(response.getContentAsString());
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(page.getPageNumber()).isZero();
+        assertThat(page.getTotalPages()).isEqualTo(1);
+        assertThat(page.getTotalElements()).isEqualTo(2);
     }
 
 }
