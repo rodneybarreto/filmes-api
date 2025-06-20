@@ -1,4 +1,4 @@
-//package br.uece.eescomdevops.filmesapi.infrastructure.config.jackson;
+//package br.com.rodneybarreto.filmesapi.infrastructure.config.jackson;
 //
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.data.web.config.EnableSpringDataWebSupport;
