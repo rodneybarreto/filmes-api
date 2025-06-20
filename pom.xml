@@ -10,7 +10,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>br.uece.eescomdevops</groupId>
+	<groupId>br.com.rodneybarreto</groupId>
 	<artifactId>filmes-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>filmes-api</name>
