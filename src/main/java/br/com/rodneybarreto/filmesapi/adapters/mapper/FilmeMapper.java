@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class FilmeMapper {
 
-    public Filme toFilme(FilmeReq filmeReq) {
+    public Filme toDomain(FilmeReq filmeReq) {
         Filme filme = new Filme();
         filme.setTitulo(filmeReq.titulo());
         filme.setSinopse(filmeReq.sinopse());
@@ -23,7 +23,7 @@ public class FilmeMapper {
         return filme;
     }
 
-    public Filme toFilme(FilmeJpaEntity filmeJpaEntity) {
+    public Filme toDomain(FilmeJpaEntity filmeJpaEntity) {
         Filme filme = new Filme();
         filme.setId(filmeJpaEntity.getId());
         filme.setTitulo(filmeJpaEntity.getTitulo());
@@ -32,12 +32,12 @@ public class FilmeMapper {
         return filme;
     }
 
-    public List<Filme> toFilmeList(List<FilmeJpaEntity> filmes) {
+    public List<Filme> toDomain(List<FilmeJpaEntity> filmes) {
         if (ObjectUtils.isEmpty(filmes)) return Collections.emptyList();
-        return filmes.stream().map(this::toFilme).toList();
+        return filmes.stream().map(this::toDomain).toList();
     }
 
-    public FilmeJpaEntity toFilmeJpaEntity(Filme filme) {
+    public FilmeJpaEntity toEntity(Filme filme) {
         FilmeJpaEntity filmeJpaEntity = new FilmeJpaEntity();
         filmeJpaEntity.setTitulo(filme.getTitulo());
         filmeJpaEntity.setSinopse(filme.getSinopse());
@@ -45,7 +45,7 @@ public class FilmeMapper {
         return filmeJpaEntity;
     }
 
-    public FilmeRes toFilmeRes(Filme filme) {
+    public FilmeRes toResponse(Filme filme) {
         return new FilmeRes(
                 filme.getId(),
                 filme.getTitulo(),
@@ -54,9 +54,9 @@ public class FilmeMapper {
         );
     }
 
-    public List<FilmeRes> toFilmeResList(List<Filme> filmes) {
+    public List<FilmeRes> toResponse(List<Filme> filmes) {
         if (ObjectUtils.isEmpty(filmes)) return Collections.emptyList();
-        return filmes.stream().map(this::toFilmeRes).toList();
+        return filmes.stream().map(this::toResponse).toList();
     }
 
 }

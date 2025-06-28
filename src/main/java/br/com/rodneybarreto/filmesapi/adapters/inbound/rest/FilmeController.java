@@ -41,7 +41,7 @@ public class FilmeController {
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> create(@Valid @RequestBody FilmeReq filmeReq, UriComponentsBuilder uriComponentsBuilder) {
-        Filme filme = mapper.toFilme(filmeReq);
+        Filme filme = mapper.toDomain(filmeReq);
         Long filmeId = createFilmeServicePort.create(filme);
         URI uri = uriComponentsBuilder.path(RESOURCE + "/{id}").buildAndExpand(filmeId).toUri();
         return ResponseEntity.created(uri).build();
@@ -50,7 +50,7 @@ public class FilmeController {
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<FilmeRes> findById(@PathVariable Long id) {
         Filme filme = readFilmeServicePort.findById(id);
-        FilmeRes filmeRes = mapper.toFilmeRes(filme);
+        FilmeRes filmeRes = mapper.toResponse(filme);
         return ResponseEntity.ok(filmeRes);
     }
 
@@ -63,7 +63,7 @@ public class FilmeController {
         PageRes<Filme> page = readFilmeServicePort.findAll(pageNumber, pageSize, sortOrder, sortBy, searchTerm);
         return ResponseEntity.ok(
                 new PageRes<>(
-                        mapper.toFilmeResList(page.getContent()),
+                        mapper.toResponse(page.getContent()),
                         page.getPageNumber(),
                         page.getPageSize(),
                         page.getTotalPages(),
@@ -74,7 +74,7 @@ public class FilmeController {
 
     @PutMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> update(@PathVariable Long id, @Valid @RequestBody FilmeReq filmeReq) {
-        Filme filme = mapper.toFilme(filmeReq);
+        Filme filme = mapper.toDomain(filmeReq);
         updateFilmeServicePort.update(id, filme);
         return ResponseEntity.noContent().build();
     }

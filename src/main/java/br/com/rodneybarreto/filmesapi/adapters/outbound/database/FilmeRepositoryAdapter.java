@@ -25,15 +25,15 @@ public class FilmeRepositoryAdapter implements FilmeRepositoryPort {
     @Override
     @Transactional
     public Filme save(Filme filme) {
-        FilmeJpaEntity filmeJpaEntity = mapper.toFilmeJpaEntity(filme);
+        FilmeJpaEntity filmeJpaEntity = mapper.toEntity(filme);
         FilmeJpaEntity filmeSaved = filmeJpaRepository.save(filmeJpaEntity);
-        return mapper.toFilme(filmeSaved);
+        return mapper.toDomain(filmeSaved);
     }
 
     @Override
     public Filme findById(Long id) {
         return filmeJpaRepository.findById(id)
-                .map(mapper::toFilme)
+                .map(mapper::toDomain)
                 .orElseThrow(() -> new EntityNotFoundException("Filme não encontrado!"));
     }
 
@@ -48,7 +48,7 @@ public class FilmeRepositoryAdapter implements FilmeRepositoryPort {
             page = filmeJpaRepository.findByTituloContainsIgnoreCase(searchTerm, pageable);
         }
         return new PageRes<>(
-                mapper.toFilmeList(page.getContent()),
+                mapper.toDomain(page.getContent()),
                 page.getNumber(),
                 page.getSize(),
                 page.getTotalPages(),
