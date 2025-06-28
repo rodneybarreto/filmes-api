@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @ActiveProfiles("test")
 @Sql(scripts = "/sql/before.sql", executionPhase = BEFORE_TEST_METHOD)
 @Sql(scripts = "/sql/after.sql", executionPhase = AFTER_TEST_METHOD)
-class FilmeControllerIT {
+class FilmeRestAdapterIT {
 
     @Autowired
     private MockMvc mockMvc;

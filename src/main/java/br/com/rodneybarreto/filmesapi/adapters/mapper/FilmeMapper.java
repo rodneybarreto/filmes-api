@@ -16,20 +16,20 @@ import java.util.List;
 public class FilmeMapper {
 
     public Filme toDomain(FilmeReq filmeReq) {
-        Filme filme = new Filme();
-        filme.setTitulo(filmeReq.titulo());
-        filme.setSinopse(filmeReq.sinopse());
-        filme.setAnoLancamento(filmeReq.anoLancamento());
-        return filme;
+        return Filme.builder()
+                .titulo(filmeReq.titulo())
+                .sinopse(filmeReq.sinopse())
+                .anoLancamento(filmeReq.anoLancamento())
+                .build();
     }
 
     public Filme toDomain(FilmeJpaEntity filmeJpaEntity) {
-        Filme filme = new Filme();
-        filme.setId(filmeJpaEntity.getId());
-        filme.setTitulo(filmeJpaEntity.getTitulo());
-        filme.setSinopse(filmeJpaEntity.getSinopse());
-        filme.setAnoLancamento(filmeJpaEntity.getAnoLancamento());
-        return filme;
+        return Filme.builder()
+                .id(filmeJpaEntity.getId())
+                .titulo(filmeJpaEntity.getTitulo())
+                .sinopse(filmeJpaEntity.getSinopse())
+                .anoLancamento(filmeJpaEntity.getAnoLancamento())
+                .build();
     }
 
     public List<Filme> toDomain(List<FilmeJpaEntity> filmes) {

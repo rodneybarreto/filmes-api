@@ -22,9 +22,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(FilmeController.RESOURCE)
+@RequestMapping(FilmeRestAdapter.RESOURCE)
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class FilmeController {
+public class FilmeRestAdapter {
 
     protected static final String RESOURCE = "/v1/filmes";
 
