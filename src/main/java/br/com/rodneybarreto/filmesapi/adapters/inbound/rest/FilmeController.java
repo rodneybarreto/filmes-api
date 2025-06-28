@@ -4,7 +4,7 @@ import br.com.rodneybarreto.filmesapi.adapters.inbound.dto.FilmeReq;
 import br.com.rodneybarreto.filmesapi.adapters.inbound.dto.FilmeRes;
 import br.com.rodneybarreto.filmesapi.adapters.inbound.dto.PageRes;
 import br.com.rodneybarreto.filmesapi.adapters.mapper.FilmeMapper;
-import br.com.rodneybarreto.filmesapi.application.core.domain.entity.Filme;
+import br.com.rodneybarreto.filmesapi.application.core.domain.Filme;
 import br.com.rodneybarreto.filmesapi.application.ports.inbound.service.CreateFilmeServicePort;
 import br.com.rodneybarreto.filmesapi.application.ports.inbound.service.DeleteFilmeServicePort;
 import br.com.rodneybarreto.filmesapi.application.ports.inbound.service.ReadFilmeServicePort;

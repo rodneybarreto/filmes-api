@@ -1,4 +1,4 @@
-package br.com.rodneybarreto.filmesapi.application.core.domain.entity;
+package br.com.rodneybarreto.filmesapi.application.core.domain;
 
 public class Filme {
 

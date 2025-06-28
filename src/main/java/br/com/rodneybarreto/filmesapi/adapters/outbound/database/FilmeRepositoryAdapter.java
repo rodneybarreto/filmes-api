@@ -4,7 +4,7 @@ import br.com.rodneybarreto.filmesapi.adapters.inbound.dto.PageRes;
 import br.com.rodneybarreto.filmesapi.adapters.mapper.FilmeMapper;
 import br.com.rodneybarreto.filmesapi.adapters.outbound.database.entity.FilmeJpaEntity;
 import br.com.rodneybarreto.filmesapi.adapters.outbound.database.repository.FilmeJpaRepository;
-import br.com.rodneybarreto.filmesapi.application.core.domain.entity.Filme;
+import br.com.rodneybarreto.filmesapi.application.core.domain.Filme;
 import br.com.rodneybarreto.filmesapi.application.ports.outbound.repository.FilmeRepositoryPort;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;

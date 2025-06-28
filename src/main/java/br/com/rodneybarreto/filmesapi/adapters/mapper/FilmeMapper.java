@@ -3,7 +3,7 @@ package br.com.rodneybarreto.filmesapi.adapters.mapper;
 import br.com.rodneybarreto.filmesapi.adapters.inbound.dto.FilmeReq;
 import br.com.rodneybarreto.filmesapi.adapters.inbound.dto.FilmeRes;
 import br.com.rodneybarreto.filmesapi.adapters.outbound.database.entity.FilmeJpaEntity;
-import br.com.rodneybarreto.filmesapi.application.core.domain.entity.Filme;
+import br.com.rodneybarreto.filmesapi.application.core.domain.Filme;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Component;

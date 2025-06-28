@@ -4,7 +4,7 @@ import br.com.rodneybarreto.filmesapi.adapters.inbound.dto.ErrorValidationRes;
 import br.com.rodneybarreto.filmesapi.adapters.inbound.dto.FilmeReq;
 import br.com.rodneybarreto.filmesapi.adapters.inbound.dto.FilmeRes;
 import br.com.rodneybarreto.filmesapi.adapters.inbound.dto.PageRes;
-import br.com.rodneybarreto.filmesapi.application.core.domain.entity.Filme;
+import br.com.rodneybarreto.filmesapi.application.core.domain.Filme;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

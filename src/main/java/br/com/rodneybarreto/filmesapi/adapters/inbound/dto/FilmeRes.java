@@ -1,6 +1,6 @@
 package br.com.rodneybarreto.filmesapi.adapters.inbound.dto;
 
-import br.com.rodneybarreto.filmesapi.application.core.domain.entity.Filme;
+import br.com.rodneybarreto.filmesapi.application.core.domain.Filme;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record FilmeRes(
