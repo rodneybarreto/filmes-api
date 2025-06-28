@@ -1,13 +1,13 @@
 services:
-    filmesdb-serv:
+    moviesdb-serv:
         image: mariadb:10.11
         restart: always
         ports:
             - "3306:3306"
         environment:
-            - MARIADB_DATABASE=filmesdb
-            - MARIADB_USER=filmesuser
-            - MARIADB_PASSWORD=filmespass
+            - MARIADB_DATABASE=moviesdb
+            - MARIADB_USER=moviesuser
+            - MARIADB_PASSWORD=moviespass
             - MARIADB_ROOT_PASSWORD=admin@123
             - TZ=America/Sao_Paulo
         volumes:
@@ -15,25 +15,25 @@ services:
         expose:
             - 3306
         networks:
-            - filmes-net
+            - movies-net
 
-#    filmes-api:
-#        image: rodneybarreto/filmes-api:0.0.1
+#    movies-api:
+#        image: rodneybarreto/movies-api:0.0.1
 #        restart: always
 #        environment:
 #            - LOG_PATH=./logs
 #            - PORT=8081
 #            - TZ=America/Sao_Paulo
-#            - DB_HOST=filmesdb-serv
+#            - DB_HOST=moviesdb-serv
 #        volumes:
-#            - "./logs:/opt/filmes-api/logs"
+#            - "./logs:/opt/movies-api/logs"
 #        ports:
 #            - "8081:8081"
 #        depends_on:
-#            - filmesdb-serv
+#            - moviesdb-serv
 #        networks:
-#            - filmes-net
+#            - movies-net
 
 networks:
-    filmes-net:
+    movies-net:
         driver: bridge

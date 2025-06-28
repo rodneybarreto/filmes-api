@@ -11,10 +11,10 @@
 	</parent>
 
 	<groupId>br.com.rodneybarreto</groupId>
-	<artifactId>filmes-api</artifactId>
+	<artifactId>movies-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>filmes-api</name>
-	<description>API de filmes</description>
+	<name>movies-api</name>
+	<description>API de movies</description>
 
 	<properties>
 		<java.version>17</java.version>

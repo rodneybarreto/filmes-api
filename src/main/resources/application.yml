@@ -1,7 +1,7 @@
 server:
     port: 8081
     servlet:
-        context-path: /filmes-api
+        context-path: /movies-api
     error:
         include-stacktrace: never
 
@@ -10,9 +10,9 @@ spring:
         active: dev
     datasource:
         driver-class-name: org.mariadb.jdbc.Driver
-        url: jdbc:mariadb://${DB_HOST:localhost}:3306/filmesdb
-        username: filmesuser
-        password: filmespass
+        url: jdbc:mariadb://${DB_HOST:localhost}:3306/moviesdb
+        username: moviesuser
+        password: moviespass
     jpa:
         show-sql: true
         properties:
