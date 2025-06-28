@@ -1,10 +1,10 @@
 package br.com.rodneybarreto.filmesapi.integrationtest.adapters.inbound.rest;
 
-import br.com.rodneybarreto.filmesapi.adapters.inbound.dto.ErrorValidationRes;
 import br.com.rodneybarreto.filmesapi.adapters.inbound.dto.FilmeReq;
 import br.com.rodneybarreto.filmesapi.adapters.inbound.dto.FilmeRes;
 import br.com.rodneybarreto.filmesapi.adapters.inbound.dto.PageRes;
 import br.com.rodneybarreto.filmesapi.application.core.domain.Filme;
+import br.com.rodneybarreto.filmesapi.infrastructure.handlers.ApiError;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,7 +46,7 @@ class FilmeControllerIT {
     private JacksonTester<FilmeRes> filmeResJson;
 
     @Autowired
-    private JacksonTester<List<ErrorValidationRes>> errorValidationResJson;
+    private JacksonTester<List<ApiError>> errorValidationResJson;
 
     @Autowired
     private JacksonTester<PageRes<Filme>> pageResJson;
@@ -88,11 +88,11 @@ class FilmeControllerIT {
                 .andReturn()
                 .getResponse();
 
-        ErrorValidationRes errorValidationRes = errorValidationResJson.parseObject(response.getContentAsString()).get(0);
+        ApiError apiError = errorValidationResJson.parseObject(response.getContentAsString()).get(0);
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
-        assertThat(errorValidationRes.field()).isEqualTo("titulo");
-        assertThat(errorValidationRes.error()).isEqualTo("must not be blank");
+        assertThat(apiError.field()).isEqualTo("titulo");
+        assertThat(apiError.error()).isEqualTo("must not be blank");
     }
 
     @Test

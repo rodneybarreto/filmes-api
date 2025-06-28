@@ -1,4 +1,4 @@
-package br.com.rodneybarreto.filmesapi.application.core.service;
+package br.com.rodneybarreto.filmesapi.application.core.usecases;
 
 import br.com.rodneybarreto.filmesapi.application.ports.inbound.service.DeleteFilmeServicePort;
 import br.com.rodneybarreto.filmesapi.application.ports.outbound.repository.FilmeRepositoryPort;

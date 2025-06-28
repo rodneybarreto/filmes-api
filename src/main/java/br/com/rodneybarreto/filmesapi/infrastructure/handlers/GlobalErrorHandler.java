@@ -1,6 +1,5 @@
-package br.com.rodneybarreto.filmesapi.adapters.inbound.rest;
+package br.com.rodneybarreto.filmesapi.infrastructure.handlers;
 
-import br.com.rodneybarreto.filmesapi.adapters.inbound.dto.ErrorValidationRes;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.List;
 
 @RestControllerAdvice
-public class ErrorHandlerController {
+public class GlobalErrorHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Void> handleError404() {
@@ -18,8 +17,8 @@ public class ErrorHandlerController {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<List<ErrorValidationRes>> handleError400(MethodArgumentNotValidException ex) {
-        List<ErrorValidationRes> errors =  ex.getFieldErrors().stream().map(ErrorValidationRes::new).toList();
+    public ResponseEntity<List<ApiError>> handleError400(MethodArgumentNotValidException ex) {
+        List<ApiError> errors =  ex.getFieldErrors().stream().map(ApiError::new).toList();
         return ResponseEntity.badRequest().body(errors);
     }
 
