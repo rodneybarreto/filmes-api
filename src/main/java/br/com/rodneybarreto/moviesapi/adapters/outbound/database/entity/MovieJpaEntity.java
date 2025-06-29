@@ -6,10 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "movies")
+@NoArgsConstructor
+@AllArgsConstructor
 public class MovieJpaEntity {
 
     @Id

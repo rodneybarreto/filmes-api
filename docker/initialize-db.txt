@@ -1,0 +1,11 @@
+$ docker network create --driver bridge movies-net
+
+$ docker run --name moviesdb-serv \
+    --network=movies-net \
+    -e MARIADB_DATABASE=moviesdb \
+    -e MARIADB_USER=moviesuser \
+    -e MARIADB_PASSWORD=moviespass \
+    -e MARIADB_ROOT_PASSWORD=admin@123 \
+    -p 3306:3306 \
+    -v /home/rodney/databases/mariadb:/var/lib/mysql \
+    -d mariadb:10.11
