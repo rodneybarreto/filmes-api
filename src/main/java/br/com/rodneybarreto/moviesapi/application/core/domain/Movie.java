@@ -64,14 +64,16 @@ public class Movie {
 
     @Override
     public String toString() {
-        return "Movie{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", synopsis='" + synopsis + '\'' +
-                ", releaseYear=" + releaseYear +
-                '}';
+        return String.format(
+                """
+                    Movie{"id":%d,"title":"%s","synopsis":"%s","releaseYear":%d}
+                """,
+                id,
+                title,
+                synopsis,
+                releaseYear
+        );
     }
-
     public static MovieBuilder builder() {
         return new MovieBuilder();
     }
