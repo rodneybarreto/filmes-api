@@ -1,6 +1,6 @@
-$ docker network create --driver bridge movies-net
+docker network create --driver bridge movies-net
 
-$ docker run --name moviesdb-serv \
+docker run --name moviesdb-serv \
     --network=movies-net \
     -e MARIADB_DATABASE=moviesdb \
     -e MARIADB_USER=moviesuser \
