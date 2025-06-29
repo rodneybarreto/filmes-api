@@ -26,7 +26,7 @@ class MovieReqTest {
     @Test
     @DisplayName("O título do filme é obrigatório")
     void scenario_1() {
-        movieReq = new MovieReq(null, "Sinopse", 2025);
+        movieReq = new MovieReq(null, "Synopsis", 2025);
 
         Set<ConstraintViolation<MovieReq>> violations = validator.validate(movieReq);
 

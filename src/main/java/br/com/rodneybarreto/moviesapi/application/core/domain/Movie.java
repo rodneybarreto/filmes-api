@@ -1,19 +1,21 @@
 package br.com.rodneybarreto.moviesapi.application.core.domain;
 
+import java.util.Objects;
+
 public class Movie {
 
     private Long id;
-    private String titulo;
-    private String sinopse;
-    private Integer anoLancamento;
+    private String title;
+    private String synopsis;
+    private Integer releaseYear;
 
     public Movie() {}
 
-    public Movie(Long id, String titulo, String sinopse, Integer anoLancamento) {
+    public Movie(Long id, String title, String synopsis, Integer releaseYear) {
         this.id = id;
-        this.titulo = titulo;
-        this.sinopse = sinopse;
-        this.anoLancamento = anoLancamento;
+        this.title = title;
+        this.synopsis = synopsis;
+        this.releaseYear = releaseYear;
     }
 
     public Long getId() {
@@ -24,28 +26,50 @@ public class Movie {
         this.id = id;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getSinopse() {
-        return sinopse;
+    public String getSynopsis() {
+        return synopsis;
     }
 
-    public void setSinopse(String sinopse) {
-        this.sinopse = sinopse;
+    public void setSynopsis(String synopsis) {
+        this.synopsis = synopsis;
     }
 
-    public Integer getAnoLancamento() {
-        return anoLancamento;
+    public Integer getReleaseYear() {
+        return releaseYear;
     }
 
-    public void setAnoLancamento(Integer anoLancamento) {
-        this.anoLancamento = anoLancamento;
+    public void setReleaseYear(Integer releaseYear) {
+        this.releaseYear = releaseYear;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return Objects.equals(id, movie.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", synopsis='" + synopsis + '\'' +
+                ", releaseYear=" + releaseYear +
+                '}';
     }
 
     public static MovieBuilder builder() {
@@ -54,9 +78,9 @@ public class Movie {
 
     public static class MovieBuilder {
         private Long id;
-        private String titulo;
-        private String sinopse;
-        private Integer anoLancamento;
+        private String title;
+        private String synopsis;
+        private Integer releaseYear;
 
         private MovieBuilder() {
         }
@@ -66,23 +90,23 @@ public class Movie {
             return this;
         }
 
-        public MovieBuilder titulo(String titulo) {
-            this.titulo = titulo;
+        public MovieBuilder title(String title) {
+            this.title = title;
             return this;
         }
 
-        public MovieBuilder sinopse(String sinopse) {
-            this.sinopse = sinopse;
+        public MovieBuilder synopsis(String synopsis) {
+            this.synopsis = synopsis;
             return this;
         }
 
-        public MovieBuilder anoLancamento(Integer anoLancamento) {
-            this.anoLancamento = anoLancamento;
+        public MovieBuilder releaseYear(Integer releaseYear) {
+            this.releaseYear = releaseYear;
             return this;
         }
 
         public Movie build() {
-            return new Movie(id, titulo, sinopse, anoLancamento);
+            return new Movie(id, title, synopsis, releaseYear);
         }
     }
 

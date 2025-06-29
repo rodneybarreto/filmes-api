@@ -5,10 +5,10 @@ import jakarta.validation.constraints.NotBlank;
 
 public record MovieReq(
         @NotBlank
-        String titulo,
+        String title,
 
-        String sinopse,
+        String synopsis,
 
-        @JsonAlias("ano_lancamento")
-        Integer anoLancamento) {
+        @JsonAlias("release_year")
+        Integer releaseYear) {
 }

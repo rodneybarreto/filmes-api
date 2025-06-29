@@ -45,7 +45,7 @@ public class MovieRepositoryAdapter implements MovieRepositoryPort {
         if (searchTerm == null || searchTerm.isBlank()) {
             page = movieJpaRepository.findAll(pageable);
         } else {
-            page = movieJpaRepository.findByTituloContainsIgnoreCase(searchTerm, pageable);
+            page = movieJpaRepository.findByTitleContainsIgnoreCase(searchTerm, pageable);
         }
         return new PageRes<>(
                 mapper.toDomain(page.getContent()),
@@ -60,9 +60,9 @@ public class MovieRepositoryAdapter implements MovieRepositoryPort {
     @Transactional
     public void update(Long id, Movie movie) {
         movieJpaRepository.findById(id).ifPresent(movieJpaEntity -> {
-            movieJpaEntity.setTitulo(movie.getTitulo());
-            movieJpaEntity.setSinopse(movie.getSinopse());
-            movieJpaEntity.setAnoLancamento(movie.getAnoLancamento());
+            movieJpaEntity.setTitle(movie.getTitle());
+            movieJpaEntity.setSynopsis(movie.getSynopsis());
+            movieJpaEntity.setReleaseYear(movie.getReleaseYear());
             movieJpaRepository.save(movieJpaEntity);
         });
     }

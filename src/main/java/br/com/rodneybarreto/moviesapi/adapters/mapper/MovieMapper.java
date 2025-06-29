@@ -17,18 +17,18 @@ public class MovieMapper {
 
     public Movie toDomain(MovieReq movieReq) {
         return Movie.builder()
-                .titulo(movieReq.titulo())
-                .sinopse(movieReq.sinopse())
-                .anoLancamento(movieReq.anoLancamento())
+                .title(movieReq.title())
+                .synopsis(movieReq.synopsis())
+                .releaseYear(movieReq.releaseYear())
                 .build();
     }
 
     public Movie toDomain(MovieJpaEntity movieJpaEntity) {
         return Movie.builder()
                 .id(movieJpaEntity.getId())
-                .titulo(movieJpaEntity.getTitulo())
-                .sinopse(movieJpaEntity.getSinopse())
-                .anoLancamento(movieJpaEntity.getAnoLancamento())
+                .title(movieJpaEntity.getTitle())
+                .synopsis(movieJpaEntity.getSynopsis())
+                .releaseYear(movieJpaEntity.getReleaseYear())
                 .build();
     }
 
@@ -39,18 +39,18 @@ public class MovieMapper {
 
     public MovieJpaEntity toEntity(Movie movie) {
         MovieJpaEntity movieJpaEntity = new MovieJpaEntity();
-        movieJpaEntity.setTitulo(movie.getTitulo());
-        movieJpaEntity.setSinopse(movie.getSinopse());
-        movieJpaEntity.setAnoLancamento(movie.getAnoLancamento());
+        movieJpaEntity.setTitle(movie.getTitle());
+        movieJpaEntity.setSynopsis(movie.getSynopsis());
+        movieJpaEntity.setReleaseYear(movie.getReleaseYear());
         return movieJpaEntity;
     }
 
     public MovieRes toResponse(Movie movie) {
         return new MovieRes(
                 movie.getId(),
-                movie.getTitulo(),
-                movie.getSinopse(),
-                movie.getAnoLancamento()
+                movie.getTitle(),
+                movie.getSynopsis(),
+                movie.getReleaseYear()
         );
     }
 

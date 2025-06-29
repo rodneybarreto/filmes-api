@@ -6,15 +6,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public record MovieRes(
         Long id,
 
-        String titulo,
+        String title,
 
-        String sinopse,
+        String synopsis,
 
-        @JsonProperty("ano_lancamento")
-        Integer anoLancamento) {
+        @JsonProperty("release_year")
+        Integer releaseYear) {
 
     public MovieRes(Movie movie) {
-        this(movie.getId(), movie.getTitulo(), movie.getSinopse(), movie.getAnoLancamento());
+        this(movie.getId(), movie.getTitle(), movie.getSynopsis(), movie.getReleaseYear());
     }
 
 }

@@ -20,16 +20,16 @@ public class MovieJpaEntity {
     @Getter
     @Setter
     @Column(nullable = false)
-    private String titulo;
+    private String title;
 
     @Getter
     @Setter
-    private String sinopse;
+    private String synopsis;
 
     @Getter
     @Setter
-    @Column(name = "ano_lancamento")
-    private Integer anoLancamento;
+    @Column(name = "release_year")
+    private Integer releaseYear;
 
 }
 

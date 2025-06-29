@@ -93,7 +93,7 @@ class MovieRestAdapterIT {
         ApiError apiError = errorValidationResJson.parseObject(response.getContentAsString()).get(0);
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
-        assertThat(apiError.field()).isEqualTo("titulo");
+        assertThat(apiError.field()).isEqualTo("title");
         assertThat(apiError.error()).isEqualTo("must not be blank");
     }
 
@@ -111,8 +111,8 @@ class MovieRestAdapterIT {
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(movieRes.id()).isEqualTo(1L);
-        assertThat(movieRes.titulo()).isEqualTo("O Incrível Hulk");
-        assertThat(movieRes.anoLancamento()).isEqualTo(2008);
+        assertThat(movieRes.title()).isEqualTo("O Incrível Hulk");
+        assertThat(movieRes.releaseYear()).isEqualTo(2008);
     }
 
     @Test
@@ -129,7 +129,7 @@ class MovieRestAdapterIT {
     @Test
     @DisplayName("Deve atualizar um movie")
     void movie_cenario5() throws Exception {
-        MovieReq movieReqPut = new MovieReq("Novo Título", "Nova Sinopse", 2023);
+        MovieReq movieReqPut = new MovieReq("Novo Título", "Nova Synopsis", 2023);
 
         MockHttpServletResponse response = mockMvc.perform(
                     put(MOVIES + "/1")
