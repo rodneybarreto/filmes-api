@@ -1,4 +1,4 @@
-package br.com.rodneybarreto.moviesapi.infrastructure.config.core;
+package br.com.rodneybarreto.moviesapi.infrastructure.config;
 
 import br.com.rodneybarreto.moviesapi.application.core.usecases.CreateMovieService;
 import br.com.rodneybarreto.moviesapi.application.core.usecases.DeleteMovieService;

@@ -1,10 +1,10 @@
-package br.com.rodneybarreto.moviesapi.integrationtest.adapters.inbound.rest;
+package br.com.rodneybarreto.moviesapi.integrationtest.adapters.inbound;
 
 import br.com.rodneybarreto.moviesapi.adapters.inbound.dto.MovieReq;
 import br.com.rodneybarreto.moviesapi.adapters.inbound.dto.MovieRes;
 import br.com.rodneybarreto.moviesapi.adapters.inbound.dto.PageRes;
 import br.com.rodneybarreto.moviesapi.application.core.domain.Movie;
-import br.com.rodneybarreto.moviesapi.infrastructure.handlers.ApiError;
+import br.com.rodneybarreto.moviesapi.infrastructure.handlers.ErrorResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,8 +18,6 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -48,7 +46,7 @@ class MovieRestAdapterIT {
     private JacksonTester<MovieRes> movieResJson;
 
     @Autowired
-    private JacksonTester<List<ApiError>> errorValidationResJson;
+    private JacksonTester<ErrorResponse> errorValidationResJson;
 
     @Autowired
     private JacksonTester<PageRes<Movie>> pageResJson;
@@ -90,11 +88,11 @@ class MovieRestAdapterIT {
                 .andReturn()
                 .getResponse();
 
-        ApiError apiError = errorValidationResJson.parseObject(response.getContentAsString()).get(0);
+        ErrorResponse errorResponse = errorValidationResJson.parseObject(response.getContentAsString());
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
-        assertThat(apiError.field()).isEqualTo("title");
-        assertThat(apiError.error()).isEqualTo("must not be blank");
+        assertThat(errorResponse.details().get(0).code()).isEqualTo("title");
+        assertThat(errorResponse.details().get(0).error()).isEqualTo("must not be blank");
     }
 
     @Test

@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.List;
 
 @RestControllerAdvice
-public class GlobalErrorHandler {
+public class GlobalExceptionHandler {
+
+private static final String MALFORMED_REQUEST = "Malformed request";
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Void> handleError404() {
@@ -17,9 +19,10 @@ public class GlobalErrorHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<List<ApiError>> handleError400(MethodArgumentNotValidException ex) {
-        List<ApiError> errors =  ex.getFieldErrors().stream().map(ApiError::new).toList();
-        return ResponseEntity.badRequest().body(errors);
+    public ResponseEntity<ErrorResponse> handleError400(MethodArgumentNotValidException ex) {
+        List<ErrorDetails> errors =  ex.getFieldErrors().stream().map(ErrorDetails::new).toList();
+        ErrorResponse errorResponse = ErrorResponse.builder().message(MALFORMED_REQUEST).details(errors).build();
+        return ResponseEntity.badRequest().body(errorResponse);
     }
 
 }
