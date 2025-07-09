@@ -5,5 +5,5 @@ import lombok.Builder;
 import java.util.List;
 
 @Builder
-public record ErrorResponse(String message, List<ErrorDetails> details) {
+public record ErrorResponse(String error, List<ErrorDetails> details) {
 }
