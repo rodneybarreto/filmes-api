@@ -2,18 +2,18 @@ package br.com.rodneybarreto.moviesapi.application.core.exceptions;
 
 public class BusinessException extends RuntimeException {
 
-    private static ApiError apiError;
+    private ApiError apiError;
 
     public BusinessException(ApiError apiError) {
-        super(apiError.getMessage());
+        this.apiError = apiError;
     }
 
-    public BusinessException(String message, Throwable cause) {
-        super(message, cause);
+    public static BusinessException of(ApiError apiError) {
+        return new BusinessException(apiError);
     }
 
-    public static void of(ApiError error) {
-        apiError = error;
+    public ApiError getError() {
+        return this.apiError;
     }
 
 }
