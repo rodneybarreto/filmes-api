@@ -21,7 +21,7 @@ private static final String MALFORMED_REQUEST = "Malformed request";
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleError400(MethodArgumentNotValidException ex) {
         List<ErrorDetails> errors =  ex.getFieldErrors().stream().map(ErrorDetails::new).toList();
-        ErrorResponse errorResponse = ErrorResponse.builder().message(MALFORMED_REQUEST).details(errors).build();
+        ErrorResponse errorResponse = ErrorResponse.builder().error(MALFORMED_REQUEST).details(errors).build();
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
