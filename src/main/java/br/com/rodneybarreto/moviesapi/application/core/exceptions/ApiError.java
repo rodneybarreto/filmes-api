@@ -7,25 +7,25 @@ public enum ApiError {
     INVALID_FIELD_ERROR(452, "Invalid field error", "Invalid field error found");
 
     private final int code;
+    private final String error;
     private final String message;
-    private final String description;
 
-    ApiError(int code, String message, String description) {
+    ApiError(int code, String error, String message) {
         this.code = code;
+        this.error = error;
         this.message = message;
-        this.description = description;
     }
 
     public int getCode() {
         return code;
     }
 
-    public String getMessage() {
-        return message;
+    public String getError() {
+        return error;
     }
 
-    public String getDescription() {
-        return description;
+    public String getMessage() {
+        return message;
     }
 
 }
