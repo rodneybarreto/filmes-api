@@ -26,8 +26,8 @@ public class MovieRepositoryAdapter implements MovieRepositoryPort {
     @Transactional
     public Movie save(Movie movie) {
         MovieJpaEntity movieJpaEntity = mapper.toEntity(movie);
-        MovieJpaEntity filmeSaved = movieJpaRepository.save(movieJpaEntity);
-        return mapper.toDomain(filmeSaved);
+        MovieJpaEntity movieSaved = movieJpaRepository.save(movieJpaEntity);
+        return mapper.toDomain(movieSaved);
     }
 
     @Override
