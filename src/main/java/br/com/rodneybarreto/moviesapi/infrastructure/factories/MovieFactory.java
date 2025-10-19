@@ -1,4 +1,4 @@
-package br.com.rodneybarreto.moviesapi.infrastructure.config;
+package br.com.rodneybarreto.moviesapi.infrastructure.factories;
 
 import br.com.rodneybarreto.moviesapi.application.core.usecases.CreateMovieService;
 import br.com.rodneybarreto.moviesapi.application.core.usecases.DeleteMovieService;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class MovieConfig {
+public class MovieFactory {
 
     @Bean
     public CreateMovieService createMovieServiceService(MovieRepositoryPort movieRepositoryPort) {
