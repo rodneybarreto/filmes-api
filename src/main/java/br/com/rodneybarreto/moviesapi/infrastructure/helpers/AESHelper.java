@@ -2,7 +2,6 @@ package br.com.rodneybarreto.moviesapi.infrastructure.helpers;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
