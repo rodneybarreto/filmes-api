@@ -1,7 +1,8 @@
 package br.com.rodneybarreto.moviesapi.infrastructure.helpers;
 
-import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -15,7 +16,8 @@ import java.security.SecureRandom;
 import java.security.spec.KeySpec;
 import java.util.Base64;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Component
+@NoArgsConstructor
 public class AESHelper {
 
     private static final String ALGORITHM = "AES";
@@ -26,21 +28,24 @@ public class AESHelper {
 
     // IMPORTANT: These should be stored securely outside the code,
     // e.g., in environment variables or a secrets manager.
-    private static final String SECRET_KEY_PASSWORD = System.getenv("APP_SECRET_KEY");
-    private static final String SALT = System.getenv("APP_SECRET_SALT");
+    @Value("${app.secret.key}")
+    private String secretKey;
 
-    private static SecretKey getSecretKey() throws GeneralSecurityException {
-        if (SECRET_KEY_PASSWORD == null || SALT == null) {
+    @Value("${app.secret.salt}")
+    private String secretSalt;
+
+    private SecretKey getSecretKey() throws GeneralSecurityException {
+        if (secretKey == null || secretSalt == null) {
             throw new IllegalStateException("Secret key password and salt must be set as environment variables.");
         }
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-        KeySpec spec = new PBEKeySpec(SECRET_KEY_PASSWORD.toCharArray(), SALT.getBytes(), ITERATION_COUNT, KEY_LENGTH);
+        KeySpec spec = new PBEKeySpec(secretKey.toCharArray(), secretSalt.getBytes(), ITERATION_COUNT, KEY_LENGTH);
         return new SecretKeySpec(factory.generateSecret(spec).getEncoded(), ALGORITHM);
     }
 
-    public static String encrypt(String openValue) {
+    public String encrypt(String openValue) {
         try {
-            SecretKey secretKey = getSecretKey();
+            SecretKey key = getSecretKey();
             Cipher cipher = Cipher.getInstance(CIPHER_TRANSFORMATION);
 
             // Generate a random IV
@@ -48,7 +53,7 @@ public class AESHelper {
             new SecureRandom().nextBytes(iv);
             IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
 
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivParameterSpec);
+            cipher.init(Cipher.ENCRYPT_MODE, key, ivParameterSpec);
             byte[] encryptedBytes = cipher.doFinal(openValue.getBytes(StandardCharsets.UTF_8));
 
             // Prepend IV to the ciphertext for use during decryption
@@ -64,9 +69,9 @@ public class AESHelper {
         }
     }
 
-    public static String decrypt(String encryptedValue) {
+    public String decrypt(String encryptedValue) {
         try {
-            SecretKey secretKey = getSecretKey();
+            SecretKey key = getSecretKey();
             Cipher cipher = Cipher.getInstance(CIPHER_TRANSFORMATION);
 
             byte[] combined = Base64.getDecoder().decode(encryptedValue);
@@ -76,7 +81,7 @@ public class AESHelper {
             System.arraycopy(combined, 0, iv, 0, iv.length);
             IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
 
-            cipher.init(Cipher.DECRYPT_MODE, secretKey, ivParameterSpec);
+            cipher.init(Cipher.DECRYPT_MODE, key, ivParameterSpec);
 
             byte[] decryptedBytes = cipher.doFinal(combined, iv.length, combined.length - iv.length);
             return new String(decryptedBytes, StandardCharsets.UTF_8);

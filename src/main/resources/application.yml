@@ -31,3 +31,8 @@ omdb:
     api:
         base-url: http://www.omdbapi.com
         key: a085fd75
+
+app:
+    secret:
+        key: ${APP_SECRET_KEY:TheMatrix123TheBourneIdentity123Taken123}
+        salt: ${APP_SECRET_SALT:019a186e-5cb4-7558-99c0-551f9849583f}
