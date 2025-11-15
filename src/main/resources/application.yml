@@ -6,6 +6,8 @@ server:
         include-stacktrace: never
 
 spring:
+    config:
+        import: optional:file:.env[.properties]
     profiles:
         active: dev
         banner:
@@ -13,8 +15,8 @@ spring:
     datasource:
         driver-class-name: org.mariadb.jdbc.Driver
         url: jdbc:mariadb://${DB_HOST:localhost}:3306/moviesdb
-        username: moviesuser
-        password: moviespass
+        username: ${DB_USERNAME}
+        password: ${DB_PASSWORD}
     jpa:
         show-sql: true
         properties:
@@ -30,9 +32,9 @@ spring:
 omdb:
     api:
         base-url: http://www.omdbapi.com
-        key: a085fd75
+        key: ${OMDB_API_KEY}
 
 app:
     secret:
-        key: ${APP_SECRET_KEY:TheMatrix123TheBourneIdentity123Taken123}
-        salt: ${APP_SECRET_SALT:019a186e-5cb4-7558-99c0-551f9849583f}
+        key: ${APP_SECRET_KEY}
+        salt: ${APP_SECRET_SALT}
