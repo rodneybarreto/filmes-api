@@ -92,7 +92,7 @@ class MovieRestAdapterIT {
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
         assertThat(errorResponse.details().get(0).code()).isEqualTo("title");
-        assertThat(errorResponse.details().get(0).error()).isEqualTo("must not be blank");
+        assertThat(errorResponse.details().get(0).message()).isEqualTo("must not be blank");
     }
 
     @Test
