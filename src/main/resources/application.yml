@@ -4,14 +4,18 @@ server:
         context-path: /movies-api
     error:
         include-stacktrace: never
+    compression:
+        enabled: true
+        mime-types: application/json
+        min-response-size: 1024
 
 spring:
     config:
         import: optional:file:.env[.properties]
     profiles:
         active: dev
-        banner:
-            location: classpath:banner.txt
+    banner:
+        location: classpath:banner.txt
     datasource:
         driver-class-name: org.mariadb.jdbc.Driver
         url: jdbc:mariadb://${DB_HOST:localhost}:3306/moviesdb
