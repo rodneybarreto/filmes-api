@@ -32,9 +32,9 @@ public class MovieMapper {
                 .build();
     }
 
-    public List<Movie> toDomain(List<MovieJpaEntity> filmes) {
-        if (ObjectUtils.isEmpty(filmes)) return Collections.emptyList();
-        return filmes.stream().map(this::toDomain).toList();
+    public List<Movie> toDomain(List<MovieJpaEntity> movies) {
+        if (ObjectUtils.isEmpty(movies)) return Collections.emptyList();
+        return movies.stream().map(this::toDomain).toList();
     }
 
     public MovieJpaEntity toEntity(Movie movie) {

@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 public class CustomerMapper {
     
-    public Customer toDomain(CustomerRequest CustomerRequest) {
+    public Customer toDomain(CustomerRequest customerRequest) {
         return Customer.builder()
-                .name(CustomerRequest.name())
-                .email(CustomerRequest.email())
-                .pixKey(CustomerRequest.pixKey())
+                .name(customerRequest.name())
+                .email(customerRequest.email())
+                .pixKey(customerRequest.pixKey())
                 .build();
     }
 
