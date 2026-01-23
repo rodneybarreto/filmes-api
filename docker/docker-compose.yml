@@ -6,12 +6,12 @@ services:
             - "3306:3306"
         environment:
             - MARIADB_DATABASE=moviesdb
-            - MARIADB_USER=moviesuser
-            - MARIADB_PASSWORD=moviespass
-            - MARIADB_ROOT_PASSWORD=admin@123
-            - TZ=America/Sao_Paulo
+            - MARIADB_USER=${MARIADB_USER}
+            - MARIADB_PASSWORD=${MARIADB_PASS}
+            - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASS}
+            - TZ=America/Fortaleza
         volumes:
-            - /home/rodney/databases/mariadb:/var/lib/mysql
+            - ${HOST_MARIADB_VOLUME}:/var/lib/mysql
         expose:
             - 3306
         networks:
@@ -23,7 +23,7 @@ services:
 #        environment:
 #            - LOG_PATH=./logs
 #            - PORT=8081
-#            - TZ=America/Sao_Paulo
+#            - TZ=America/Fortaleza
 #            - DB_HOST=moviesdb-serv
 #        volumes:
 #            - "./logs:/opt/movies-api/logs"
