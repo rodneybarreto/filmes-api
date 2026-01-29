@@ -1,0 +1,12 @@
+package br.com.rodneybarreto.moviesapi.application.port.in;
+
+import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.PageRes;
+import br.com.rodneybarreto.moviesapi.application.core.domain.Movie;
+
+public interface ReadMovieUseCase {
+
+    Movie findById(Long id);
+
+    PageRes<Movie> findAll(int pageNumber, int pageSize, String sortOrder, String sortBy, String searchTerm);
+
+}

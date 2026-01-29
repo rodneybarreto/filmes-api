@@ -1,0 +1,48 @@
+package br.com.rodneybarreto.moviesapi.adapter.mapper;
+
+import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.CustomerRequest;
+import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.CustomerResponse;
+import br.com.rodneybarreto.moviesapi.adapter.out.persistence.entity.CustomerEntity;
+import br.com.rodneybarreto.moviesapi.application.core.domain.Customer;
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
+
+@Component
+@NoArgsConstructor
+public class CustomerMapper {
+    
+    public Customer toDomain(CustomerRequest customerRequest) {
+        return Customer.builder()
+                .name(customerRequest.name())
+                .email(customerRequest.email())
+                .pixKey(customerRequest.pixKey())
+                .build();
+    }
+
+    public Customer toDomain(CustomerEntity customerEntity) {
+        return Customer.builder()
+                .id(customerEntity.getId())
+                .name(customerEntity.getName())
+                .email(customerEntity.getEmail())
+                .pixKey(customerEntity.getPixKey())
+                .build();
+    }
+
+    public CustomerEntity toEntity(Customer customer) {
+        CustomerEntity customerEntity = new CustomerEntity();
+        customerEntity.setName(customer.getName());
+        customerEntity.setEmail(customer.getEmail());
+        customerEntity.setPixKey(customer.getPixKey());
+        return customerEntity;
+    }
+
+    public CustomerResponse toResponse(Customer customer) {
+        return new CustomerResponse(
+                customer.getId(),
+                customer.getName(),
+                customer.getEmail(),
+                customer.getPixKey()
+        );
+    }
+
+}

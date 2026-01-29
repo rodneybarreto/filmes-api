@@ -1,6 +1,6 @@
 package br.com.rodneybarreto.moviesapi.integrationtest.adapters.inbound.dto;
 
-import br.com.rodneybarreto.moviesapi.adapters.inbound.dto.MovieReq;
+import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.MovieReq;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
