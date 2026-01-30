@@ -1,6 +1,6 @@
 package br.com.rodneybarreto.moviesapi.adapter.out.persistence;
 
-import br.com.rodneybarreto.moviesapi.adapter.out.persistence.entity.CustomerEntity;
+import br.com.rodneybarreto.moviesapi.adapter.out.persistence.entity.CustomerJpaEntity;
 import br.com.rodneybarreto.moviesapi.adapter.out.persistence.repository.CustomerJpaRepository;
 import br.com.rodneybarreto.moviesapi.application.core.domain.Customer;
 import br.com.rodneybarreto.moviesapi.application.port.out.persistence.CustomerPersistence;
@@ -18,15 +18,15 @@ public class CustomerPersistenceAdapter implements CustomerPersistence {
     @Override
     @Transactional
     public Customer create(Customer customer) {
-        CustomerEntity entity = CustomerEntity.of(customer);
-        CustomerEntity entitySaved = customerJpaRepository.save(entity);
-        return CustomerEntity.toDomain(entitySaved);
+        CustomerJpaEntity entity = CustomerJpaEntity.of(customer);
+        CustomerJpaEntity entitySaved = customerJpaRepository.save(entity);
+        return CustomerJpaEntity.toDomain(entitySaved);
     }
 
     @Override
     public Customer findById(Long id) {
         return customerJpaRepository.findById(id)
-                .map(CustomerEntity::toDomain)
+                .map(CustomerJpaEntity::toDomain)
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
     }
 
