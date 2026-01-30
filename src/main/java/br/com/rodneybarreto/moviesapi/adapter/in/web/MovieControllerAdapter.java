@@ -4,10 +4,7 @@ import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.MovieRequest;
 import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.MovieResponse;
 import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.PageResponse;
 import br.com.rodneybarreto.moviesapi.application.core.domain.Movie;
-import br.com.rodneybarreto.moviesapi.application.port.in.CreateMovieUseCasePort;
-import br.com.rodneybarreto.moviesapi.application.port.in.DeleteMovieUseCasePort;
-import br.com.rodneybarreto.moviesapi.application.port.in.ReadMovieUseCasePort;
-import br.com.rodneybarreto.moviesapi.application.port.in.UpdateMovieUseCasePort;
+import br.com.rodneybarreto.moviesapi.application.port.in.MovieUseCasePort;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,10 +24,7 @@ public class MovieControllerAdapter {
 
     protected static final String RESOURCE = "/v1/movies";
 
-    private final CreateMovieUseCasePort createMovieUseCasePort;
-    private final ReadMovieUseCasePort readMovieUseCasePort;
-    private final UpdateMovieUseCasePort updateMovieUseCasePort;
-    private final DeleteMovieUseCasePort deleteMovieUseCasePort;
+    private final MovieUseCasePort movieUseCasePort;
 
     @InitBinder
     public void initBinder(final WebDataBinder binder) {
@@ -40,14 +34,14 @@ public class MovieControllerAdapter {
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> create(@Valid @RequestBody MovieRequest movieRequest, UriComponentsBuilder uriBuilder) {
         Movie movie = MovieRequest.toDomain(movieRequest);
-        Movie createdMovie = createMovieUseCasePort.create(movie);
+        Movie createdMovie = movieUseCasePort.createMovie(movie);
         URI uri = uriBuilder.path(RESOURCE + "/{id}").buildAndExpand(createdMovie.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<MovieResponse> findById(@PathVariable long id) {
-        Movie movie = readMovieUseCasePort.findById(id);
+    public ResponseEntity<MovieResponse> findOne(@PathVariable long id) {
+        Movie movie = movieUseCasePort.findMovieById(id);
         return ResponseEntity.ok(new MovieResponse(movie));
     }
 
@@ -59,7 +53,7 @@ public class MovieControllerAdapter {
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(required = false) String searchTerm
     ) {
-        PageResponse<Movie> page = readMovieUseCasePort.findAll(pageNumber, pageSize, sortOrder, sortBy, searchTerm);
+        PageResponse<Movie> page = movieUseCasePort.findAllMovies(pageNumber, pageSize, sortOrder, sortBy, searchTerm);
         return ResponseEntity.ok(
                 new PageResponse<>(
                         MovieResponse.toList(page.getContent()),
@@ -74,13 +68,13 @@ public class MovieControllerAdapter {
     @PutMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> update(@PathVariable Long id, @Valid @RequestBody MovieRequest movieRequest) {
         Movie movie = MovieRequest.toDomain(movieRequest);
-        updateMovieUseCasePort.update(id, movie);
+        movieUseCasePort.updateMovie(id, movie);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        deleteMovieUseCasePort.delete(id);
+        movieUseCasePort.deleteMovie(id);
         return ResponseEntity.noContent().build();
     }
 

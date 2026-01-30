@@ -3,8 +3,7 @@ package br.com.rodneybarreto.moviesapi.adapter.in.web;
 import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.CustomerRequest;
 import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.CustomerResponse;
 import br.com.rodneybarreto.moviesapi.application.core.domain.Customer;
-import br.com.rodneybarreto.moviesapi.application.port.in.CreateCustomerUseCasePort;
-import br.com.rodneybarreto.moviesapi.application.port.in.ReadCustomerUseCasePort;
+import br.com.rodneybarreto.moviesapi.application.port.in.CustomerUseCasePort;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +22,7 @@ public class CustomerControllerAdapter {
 
     protected static final String RESOURCE = "/v1/customers";
 
-    private final CreateCustomerUseCasePort createCustomerUseCasePort;
-    private final ReadCustomerUseCasePort readCustomerUseCasePort;
+    private final CustomerUseCasePort customerUseCasePort;
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> create(
@@ -32,14 +30,14 @@ public class CustomerControllerAdapter {
             UriComponentsBuilder uriBuilder
     ) {
         Customer customer = CustomerRequest.toDomain(customerRequest);
-        Customer createdCustomer = createCustomerUseCasePort.create(customer);
+        Customer createdCustomer = customerUseCasePort.createCustomer(customer);
         URI uri = uriBuilder.path(RESOURCE + "/{id}").buildAndExpand(createdCustomer.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<CustomerResponse> findById(@PathVariable long id) {
-        Customer customer = readCustomerUseCasePort.findById(id);
+    public ResponseEntity<CustomerResponse> findOne(@PathVariable long id) {
+        Customer customer = customerUseCasePort.findCustomerById(id);
         return ResponseEntity.ok(new CustomerResponse(customer));
     }
 
