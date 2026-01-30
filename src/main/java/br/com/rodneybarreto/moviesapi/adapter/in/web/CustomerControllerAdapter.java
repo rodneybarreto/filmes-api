@@ -16,11 +16,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(CustomerControllerAdapter.RESOURCE)
+@RequestMapping(CustomerControllerAdapter.CUSTOMER_RESOURCE)
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CustomerControllerAdapter {
 
-    protected static final String RESOURCE = "/v1/customers";
+    public static final String CUSTOMER_RESOURCE = "/v1/customers";
 
     private final CustomerUseCasePort customerUseCasePort;
 
@@ -31,7 +31,7 @@ public class CustomerControllerAdapter {
     ) {
         Customer customer = CustomerRequest.toDomain(customerRequest);
         Customer createdCustomer = customerUseCasePort.createCustomer(customer);
-        URI uri = uriBuilder.path(RESOURCE + "/{id}").buildAndExpand(createdCustomer.getId()).toUri();
+        URI uri = uriBuilder.path(CUSTOMER_RESOURCE + "/{id}").buildAndExpand(createdCustomer.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 

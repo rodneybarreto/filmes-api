@@ -19,6 +19,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static br.com.rodneybarreto.moviesapi.adapter.in.web.MovieControllerAdapter.MOVIE_RESOURCE;
 import static br.com.rodneybarreto.moviesapi.adapter.in.web.exception.ExceptionControllerAdapter.MALFORMED_REQUEST;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -31,11 +32,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @AutoConfigureMockMvc
 @AutoConfigureJsonTesters
 @ActiveProfiles("test")
-@Sql(scripts = "/sql/before.sql", executionPhase = BEFORE_TEST_METHOD)
-@Sql(scripts = "/sql/after.sql", executionPhase = AFTER_TEST_METHOD)
+@Sql(scripts = "/sql/movie/before.sql", executionPhase = BEFORE_TEST_METHOD)
+@Sql(scripts = "/sql/movie/after.sql", executionPhase = AFTER_TEST_METHOD)
 class MovieControllerAdapterIT {
-
-    public static final String MOVIES = "/v1/movies";
 
     @Autowired
     private MockMvc mockMvc;
@@ -60,10 +59,10 @@ class MovieControllerAdapterIT {
     }
 
     @Test
-    @DisplayName("Deve cadastrar um novo movie")
+    @DisplayName("Deve cadastrar um novo filme com sucesso")
     void movie_cenario1() throws Exception {
         MockHttpServletResponse response = mockMvc.perform(
-                post(MOVIES)
+                post(MOVIE_RESOURCE)
                         .contentType(APPLICATION_JSON)
                         .content(movieReqJson.write(movieRequest).getJson())
                 )
@@ -76,12 +75,12 @@ class MovieControllerAdapterIT {
     }
 
     @Test
-    @DisplayName("Deve retornar erro 400 ao tentar cadastrar um novo movie sem um título")
+    @DisplayName("Deve retornar BAD REQUEST ao tentar cadastrar um novo filme sem um título")
     void movie_cenario2() throws Exception {
         MovieRequest movieBadReq = new MovieRequest("", "Um barco de pesca pega um homem amnésico", 2002);
 
         MockHttpServletResponse response = mockMvc.perform(
-                post(MOVIES)
+                post(MOVIE_RESOURCE)
                         .contentType(APPLICATION_JSON)
                         .content(movieReqJson.write(movieBadReq).getJson())
                 )
@@ -97,10 +96,10 @@ class MovieControllerAdapterIT {
     }
 
     @Test
-    @DisplayName("Deve retornar um movie pelo ID com sucesso")
+    @DisplayName("Deve retornar um filme pelo ID com sucesso")
     void movie_cenario3() throws Exception {
         MockHttpServletResponse response = mockMvc.perform(
-                    get(MOVIES + "/1")
+                    get(MOVIE_RESOURCE + "/1")
                 )
                 .andDo(print())
                 .andReturn()
@@ -115,9 +114,9 @@ class MovieControllerAdapterIT {
     }
 
     @Test
-    @DisplayName("Deve retornar NOT FOUND quando não encontrar movie pelo ID")
+    @DisplayName("Deve retornar NOT FOUND quando não encontrar o filme pelo ID")
     void movie_cenario4() throws Exception {
-        MockHttpServletResponse response = mockMvc.perform(get(MOVIES + "/3"))
+        MockHttpServletResponse response = mockMvc.perform(get(MOVIE_RESOURCE + "/3"))
                 .andDo(print())
                 .andReturn()
                 .getResponse();
@@ -126,12 +125,12 @@ class MovieControllerAdapterIT {
     }
 
     @Test
-    @DisplayName("Deve atualizar um movie")
+    @DisplayName("Deve atualizar um filme com sucesso")
     void movie_cenario5() throws Exception {
         MovieRequest movieRequestPut = new MovieRequest("Novo Título", "Nova Synopsis", 2023);
 
         MockHttpServletResponse response = mockMvc.perform(
-                    put(MOVIES + "/1")
+                    put(MOVIE_RESOURCE + "/1")
                             .contentType(APPLICATION_JSON)
                             .content(movieReqJson.write(movieRequestPut).getJson())
                 )
@@ -143,9 +142,9 @@ class MovieControllerAdapterIT {
     }
 
     @Test
-    @DisplayName("Deve deletar um movie pelo ID")
+    @DisplayName("Deve deletar um filme pelo ID com sucesso")
     void movie_cenario6() throws Exception {
-        MockHttpServletResponse response = mockMvc.perform(delete(MOVIES + "/1"))
+        MockHttpServletResponse response = mockMvc.perform(delete(MOVIE_RESOURCE + "/1"))
                 .andDo(print())
                 .andReturn()
                 .getResponse();
@@ -154,9 +153,9 @@ class MovieControllerAdapterIT {
     }
 
     @Test
-    @DisplayName("Deve retornar os movies paginados")
+    @DisplayName("Deve retornar os filmes paginados")
     void movie_cenario7() throws Exception {
-        MockHttpServletResponse response = mockMvc.perform(get(MOVIES + "?page=0&size=10"))
+        MockHttpServletResponse response = mockMvc.perform(get(MOVIE_RESOURCE + "?page=0&size=10"))
                 .andDo(print())
                 .andReturn()
                 .getResponse();

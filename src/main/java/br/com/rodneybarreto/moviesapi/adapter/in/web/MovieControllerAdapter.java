@@ -18,11 +18,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(MovieControllerAdapter.RESOURCE)
+@RequestMapping(MovieControllerAdapter.MOVIE_RESOURCE)
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MovieControllerAdapter {
 
-    protected static final String RESOURCE = "/v1/movies";
+    public static final String MOVIE_RESOURCE = "/v1/movies";
 
     private final MovieUseCasePort movieUseCasePort;
 
@@ -35,7 +35,7 @@ public class MovieControllerAdapter {
     public ResponseEntity<Void> create(@Valid @RequestBody MovieRequest movieRequest, UriComponentsBuilder uriBuilder) {
         Movie movie = MovieRequest.toDomain(movieRequest);
         Movie createdMovie = movieUseCasePort.createMovie(movie);
-        URI uri = uriBuilder.path(RESOURCE + "/{id}").buildAndExpand(createdMovie.getId()).toUri();
+        URI uri = uriBuilder.path(MOVIE_RESOURCE + "/{id}").buildAndExpand(createdMovie.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
