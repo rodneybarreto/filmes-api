@@ -1,9 +1,8 @@
 package br.com.rodneybarreto.moviesapi.adapter.in.web;
 
-import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.MovieReq;
-import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.MovieRes;
-import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.PageRes;
-import br.com.rodneybarreto.moviesapi.adapter.mapper.MovieMapper;
+import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.MovieRequest;
+import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.MovieResponse;
+import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.PageResponse;
 import br.com.rodneybarreto.moviesapi.application.core.domain.Movie;
 import br.com.rodneybarreto.moviesapi.application.port.in.CreateMovieUseCase;
 import br.com.rodneybarreto.moviesapi.application.port.in.DeleteMovieUseCase;
@@ -32,7 +31,6 @@ public class MovieController {
     private final ReadMovieUseCase readMovieUseCase;
     private final UpdateMovieUseCase updateMovieUseCase;
     private final DeleteMovieUseCase deleteMovieUseCase;
-    private final MovieMapper mapper;
 
     @InitBinder
     public void initBinder(final WebDataBinder binder) {
@@ -40,30 +38,31 @@ public class MovieController {
     }
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> create(@Valid @RequestBody MovieReq movieReq, UriComponentsBuilder uriComponentsBuilder) {
-        Movie movie = mapper.toDomain(movieReq);
-        Long filmeId = createMovieUseCase.create(movie);
-        URI uri = uriComponentsBuilder.path(RESOURCE + "/{id}").buildAndExpand(filmeId).toUri();
+    public ResponseEntity<Void> create(@Valid @RequestBody MovieRequest movieRequest, UriComponentsBuilder uriBuilder) {
+        Movie movie = MovieRequest.toDomain(movieRequest);
+        Movie createdMovie = createMovieUseCase.create(movie);
+        URI uri = uriBuilder.path(RESOURCE + "/{id}").buildAndExpand(createdMovie.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<MovieRes> findById(@PathVariable Long id) {
+    public ResponseEntity<MovieResponse> findById(@PathVariable long id) {
         Movie movie = readMovieUseCase.findById(id);
-        MovieRes movieRes = mapper.toResponse(movie);
-        return ResponseEntity.ok(movieRes);
+        return ResponseEntity.ok(new MovieResponse(movie));
     }
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<PageRes<MovieRes>> findAll(@RequestParam(defaultValue = "0") int pageNumber,
-                                                     @RequestParam(defaultValue = "10") int pageSize,
-                                                     @RequestParam(defaultValue = "ASC") String sortOrder,
-                                                     @RequestParam(defaultValue = "id") String sortBy,
-                                                     @RequestParam(value = "searchTerm", required = false) String searchTerm) {
-        PageRes<Movie> page = readMovieUseCase.findAll(pageNumber, pageSize, sortOrder, sortBy, searchTerm);
+    public ResponseEntity<PageResponse<MovieResponse>> findAll(
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(defaultValue = "ASC") String sortOrder,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(required = false) String searchTerm
+    ) {
+        PageResponse<Movie> page = readMovieUseCase.findAll(pageNumber, pageSize, sortOrder, sortBy, searchTerm);
         return ResponseEntity.ok(
-                new PageRes<>(
-                        mapper.toResponse(page.getContent()),
+                new PageResponse<>(
+                        MovieResponse.toList(page.getContent()),
                         page.getPageNumber(),
                         page.getPageSize(),
                         page.getTotalPages(),
@@ -73,8 +72,8 @@ public class MovieController {
     }
 
     @PutMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> update(@PathVariable Long id, @Valid @RequestBody MovieReq movieReq) {
-        Movie movie = mapper.toDomain(movieReq);
+    public ResponseEntity<Void> update(@PathVariable Long id, @Valid @RequestBody MovieRequest movieRequest) {
+        Movie movie = MovieRequest.toDomain(movieRequest);
         updateMovieUseCase.update(id, movie);
         return ResponseEntity.noContent().build();
     }

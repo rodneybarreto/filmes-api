@@ -1,6 +1,6 @@
 package br.com.rodneybarreto.moviesapi.integrationtest.adapters.inbound.dto;
 
-import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.MovieReq;
+import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.MovieRequest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -12,12 +12,12 @@ import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-class MovieReqTest {
+class MovieRequestTest {
 
     private final Validator validator;
-    private MovieReq movieReq;
+    private MovieRequest movieRequest;
 
-    public MovieReqTest() {
+    public MovieRequestTest() {
         try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
             this.validator = validatorFactory.getValidator();
         }
@@ -26,9 +26,9 @@ class MovieReqTest {
     @Test
     @DisplayName("O título do filme é obrigatório")
     void scenario_1() {
-        movieReq = new MovieReq(null, "Synopsis", 2025);
+        movieRequest = new MovieRequest(null, "Synopsis", 2025);
 
-        Set<ConstraintViolation<MovieReq>> violations = validator.validate(movieReq);
+        Set<ConstraintViolation<MovieRequest>> violations = validator.validate(movieRequest);
 
         assertThat(violations).isNotEmpty();
     }

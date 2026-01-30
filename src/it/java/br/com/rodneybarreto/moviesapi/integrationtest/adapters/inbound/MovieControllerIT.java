@@ -1,8 +1,8 @@
 package br.com.rodneybarreto.moviesapi.integrationtest.adapters.inbound;
 
-import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.MovieReq;
-import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.MovieRes;
-import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.PageRes;
+import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.MovieRequest;
+import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.MovieResponse;
+import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.PageResponse;
 import br.com.rodneybarreto.moviesapi.application.core.domain.Movie;
 import br.com.rodneybarreto.moviesapi.infrastructure.handler.ErrorResponse;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,22 +40,22 @@ class MovieControllerIT {
     private MockMvc mockMvc;
 
     @Autowired
-    private JacksonTester<MovieReq> movieReqJson;
+    private JacksonTester<MovieRequest> movieReqJson;
 
     @Autowired
-    private JacksonTester<MovieRes> movieResJson;
+    private JacksonTester<MovieResponse> movieResJson;
 
     @Autowired
     private JacksonTester<ErrorResponse> errorValidationResJson;
 
     @Autowired
-    private JacksonTester<PageRes<Movie>> pageResJson;
+    private JacksonTester<PageResponse<Movie>> pageResJson;
 
-    private MovieReq movieReq;
+    private MovieRequest movieRequest;
 
     @BeforeEach
     void setup() {
-        movieReq = new MovieReq("A Identidade Bourne", "Um barco de pesca pega um homem amnésico", 2002);
+        movieRequest = new MovieRequest("A Identidade Bourne", "Um barco de pesca pega um homem amnésico", 2002);
     }
 
     @Test
@@ -64,7 +64,7 @@ class MovieControllerIT {
         MockHttpServletResponse response = mockMvc.perform(
                 post(MOVIES)
                         .contentType(APPLICATION_JSON)
-                        .content(movieReqJson.write(movieReq).getJson())
+                        .content(movieReqJson.write(movieRequest).getJson())
                 )
                 .andDo(print())
                 .andReturn()
@@ -77,7 +77,7 @@ class MovieControllerIT {
     @Test
     @DisplayName("Deve retornar erro 400 ao tentar cadastrar um novo movie sem um título")
     void movie_cenario2() throws Exception {
-        MovieReq movieBadReq = new MovieReq("", "JUm barco de pesca pega um homem amnésico", 2002);
+        MovieRequest movieBadReq = new MovieRequest("", "JUm barco de pesca pega um homem amnésico", 2002);
 
         MockHttpServletResponse response = mockMvc.perform(
                 post(MOVIES)
@@ -92,7 +92,7 @@ class MovieControllerIT {
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
         assertThat(errorResponse.details().get(0).code()).isEqualTo("title");
-        assertThat(errorResponse.details().get(0).message()).isEqualTo("must not be blank");
+        assertThat(errorResponse.details().get(0).message()).isEqualTo("The title is required");
     }
 
     @Test
@@ -105,12 +105,12 @@ class MovieControllerIT {
                 .andReturn()
                 .getResponse();
 
-        MovieRes movieRes = movieResJson.parseObject(response.getContentAsString());
+        MovieResponse movieResponse = movieResJson.parseObject(response.getContentAsString());
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(movieRes.id()).isEqualTo(1L);
-        assertThat(movieRes.title()).isEqualTo("O Incrível Hulk");
-        assertThat(movieRes.releaseYear()).isEqualTo(2008);
+        assertThat(movieResponse.id()).isEqualTo(1L);
+        assertThat(movieResponse.title()).isEqualTo("O Incrível Hulk");
+        assertThat(movieResponse.releaseYear()).isEqualTo(2008);
     }
 
     @Test
@@ -127,12 +127,12 @@ class MovieControllerIT {
     @Test
     @DisplayName("Deve atualizar um movie")
     void movie_cenario5() throws Exception {
-        MovieReq movieReqPut = new MovieReq("Novo Título", "Nova Synopsis", 2023);
+        MovieRequest movieRequestPut = new MovieRequest("Novo Título", "Nova Synopsis", 2023);
 
         MockHttpServletResponse response = mockMvc.perform(
                     put(MOVIES + "/1")
                             .contentType(APPLICATION_JSON)
-                            .content(movieReqJson.write(movieReqPut).getJson())
+                            .content(movieReqJson.write(movieRequestPut).getJson())
                 )
                 .andDo(print())
                 .andReturn()
@@ -160,7 +160,7 @@ class MovieControllerIT {
                 .andReturn()
                 .getResponse();
 
-        PageRes<Movie> page = pageResJson.parseObject(response.getContentAsString());
+        PageResponse<Movie> page = pageResJson.parseObject(response.getContentAsString());
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(page.getPageNumber()).isZero();

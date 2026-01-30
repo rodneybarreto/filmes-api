@@ -4,7 +4,9 @@ import br.com.rodneybarreto.moviesapi.adapter.out.persistence.entity.MovieJpaEnt
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface MovieJpaRepository extends JpaRepository<MovieJpaEntity, Long> {
 
     Page<MovieJpaEntity> findAll(Pageable pageable);

@@ -1,6 +1,6 @@
 package br.com.rodneybarreto.moviesapi.application.core.service;
 
-import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.PageRes;
+import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.PageResponse;
 import br.com.rodneybarreto.moviesapi.application.core.domain.Movie;
 import br.com.rodneybarreto.moviesapi.application.port.in.ReadMovieUseCase;
 import br.com.rodneybarreto.moviesapi.application.port.out.persistence.MoviePersistence;
@@ -19,7 +19,7 @@ public class ReadMovieService implements ReadMovieUseCase {
     }
 
     @Override
-    public PageRes<Movie> findAll(int pageNumber, int pageSize, String sortOrder, String sortBy, String searchTerm) {
+    public PageResponse<Movie> findAll(int pageNumber, int pageSize, String sortOrder, String sortBy, String searchTerm) {
         return moviePersistence.findAll(pageNumber, pageSize, sortOrder, sortBy, searchTerm);
     }
 

@@ -18,6 +18,12 @@ public class Movie {
         this.releaseYear = releaseYear;
     }
 
+    public Movie(String title, String synopsis, Integer releaseYear) {
+        this.title = title;
+        this.synopsis = synopsis;
+        this.releaseYear = releaseYear;
+    }
+
     public Long getId() {
         return id;
     }

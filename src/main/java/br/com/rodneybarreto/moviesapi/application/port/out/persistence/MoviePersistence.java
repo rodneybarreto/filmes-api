@@ -1,6 +1,6 @@
 package br.com.rodneybarreto.moviesapi.application.port.out.persistence;
 
-import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.PageRes;
+import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.PageResponse;
 import br.com.rodneybarreto.moviesapi.application.core.domain.Movie;
 
 public interface MoviePersistence {
@@ -9,7 +9,7 @@ public interface MoviePersistence {
 
     Movie findById(Long id);
 
-    PageRes<Movie> findAll(int pageNumber, int pageSize, String sortOrder, String sortBy, String searchTerm);
+    PageResponse<Movie> findAll(int pageNumber, int pageSize, String sortOrder, String sortBy, String searchTerm);
 
     void update(Long id, Movie movie);
 

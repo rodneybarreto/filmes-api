@@ -1,6 +1,6 @@
 package br.com.rodneybarreto.moviesapi.adapter.out.persistence;
 
-import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.PageRes;
+import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.PageResponse;
 import br.com.rodneybarreto.moviesapi.adapter.out.persistence.entity.MovieJpaEntity;
 import br.com.rodneybarreto.moviesapi.adapter.out.persistence.repository.MovieJpaRepository;
 import br.com.rodneybarreto.moviesapi.application.core.domain.Movie;
@@ -32,11 +32,11 @@ public class MoviePersistenceAdapter implements MoviePersistence {
     public Movie findById(Long id) {
         return movieJpaRepository.findById(id)
                 .map(MovieJpaEntity::toDomain)
-                .orElseThrow(() -> new EntityNotFoundException("Filme não encontrado!"));
+                .orElseThrow(() -> new EntityNotFoundException("Movie not found"));
     }
 
     @Override
-    public PageRes<Movie> findAll(int pageNumber, int pageSize, String sortOrder, String sortBy, String searchTerm) {
+    public PageResponse<Movie> findAll(int pageNumber, int pageSize, String sortOrder, String sortBy, String searchTerm) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.valueOf(sortOrder), sortBy));
 
         Page<MovieJpaEntity> page;
@@ -45,7 +45,7 @@ public class MoviePersistenceAdapter implements MoviePersistence {
         } else {
             page = movieJpaRepository.findByTitleContainsIgnoreCase(searchTerm, pageable);
         }
-        return new PageRes<>(
+        return new PageResponse<>(
                 MovieJpaEntity.toDomain(page.getContent()),
                 page.getNumber(),
                 page.getSize(),

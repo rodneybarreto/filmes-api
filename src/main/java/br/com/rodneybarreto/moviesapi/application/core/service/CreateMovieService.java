@@ -13,9 +13,8 @@ public class CreateMovieService implements CreateMovieUseCase {
     }
 
     @Override
-    public Long create(Movie movie) {
-        Movie movieSaved = moviePersistence.create(movie);
-        return movieSaved.getId();
+    public Movie create(Movie movie) {
+        return moviePersistence.create(movie);
     }
 
 }
