@@ -37,6 +37,7 @@ public class Movie {
     }
 
     public void setTitle(String title) {
+        Objects.requireNonNull(title, "Title cannot be null");
         this.title = title;
     }
 
@@ -72,7 +73,7 @@ public class Movie {
     public String toString() {
         return String.format(
                 """
-                    Movie{"id":%d,"title":"%s","synopsis":"%s","releaseYear":%d}
+                Movie{"id":%d,"title":"%s","synopsis":"%s","releaseYear":%d}
                 """,
                 id,
                 title,

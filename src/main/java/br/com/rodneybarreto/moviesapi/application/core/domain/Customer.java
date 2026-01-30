@@ -37,6 +37,7 @@ public class Customer {
     }
 
     public void setName(String name) {
+        Objects.requireNonNull(name, "Name cannot be null");
         this.name = name;
     }
 
@@ -45,6 +46,7 @@ public class Customer {
     }
 
     public void setEmail(String email) {
+        Objects.requireNonNull(email, "Email cannot be null");
         this.email = email;
     }
 
@@ -70,12 +72,15 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", pixKey='" + pixKey + '\'' +
-                '}';
+        return String.format(
+                """
+                Customer{"id":%d,"name":"%s","email":"%s","pixKey":"%s"}
+                """,
+                id,
+                name,
+                email,
+                pixKey
+        );
     }
 
     public static CustomerBuilder builder() {
