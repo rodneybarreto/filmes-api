@@ -24,11 +24,12 @@ class MovieRequestTest {
     @Test
     @DisplayName("O título do filme é obrigatório")
     void scenario_1() {
-        MovieRequest movieRequest = new MovieRequest(null, "Synopsis", 2025);
+        var movieRequest = new MovieRequest(null, "Synopsis", 2025);
 
         Set<ConstraintViolation<MovieRequest>> violations = validator.validate(movieRequest);
 
         assertThat(violations).isNotEmpty();
+        assertThat(violations.iterator().next().getMessage()).isEqualTo("The title is required");
     }
 
 }
