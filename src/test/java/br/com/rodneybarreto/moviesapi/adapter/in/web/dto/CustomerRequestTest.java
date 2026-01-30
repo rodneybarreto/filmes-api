@@ -43,4 +43,16 @@ class CustomerRequestTest {
         assertThat(violations.iterator().next().getMessage()).isEqualTo("The email is required");
     }
 
+    @Test
+    @DisplayName("A chave pix do cliente deve ter no máximo 255 caracteres")
+    void scenario_3() {
+        var pixKey = "a".repeat(256);
+        var customerRequest = new CustomerRequest("Jhon Doe", "email@email", pixKey);
+
+        Set<ConstraintViolation<CustomerRequest>> violations = validator.validate(customerRequest);
+
+        assertThat(violations).isNotEmpty();
+        assertThat(violations.iterator().next().getMessage()).isEqualTo("The pix key must be less than 255 characters");
+    }
+
 }

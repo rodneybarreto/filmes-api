@@ -14,7 +14,7 @@ public record CustomerRequest(
         @NotBlank(message = "The email is required")
         String email,
 
-        @Size(max = 255)
+        @Size(max = 255, message = "The pix key must be less than 255 characters")
         @JsonAlias("pix_key")
         String pixKey
 ) {
