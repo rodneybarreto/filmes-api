@@ -1,12 +1,12 @@
-package br.com.rodneybarreto.moviesapi.infrastructure.configuration;
+package br.com.rodneybarreto.moviesapi.infrastructure.factory;
 
 import br.com.rodneybarreto.moviesapi.application.core.usecase.MovieUseCase;
 import br.com.rodneybarreto.moviesapi.application.port.out.persistence.MoviePersistence;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
-@Configuration
-public class MovieConfig {
+@Component
+public class MovieBeanFactory {
 
     @Bean
     public MovieUseCase movieUseCase(MoviePersistence moviePersistence) {
