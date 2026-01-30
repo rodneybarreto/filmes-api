@@ -88,6 +88,7 @@ public class Customer {
     }
 
     public static class CustomerBuilder {
+
         private Long id;
         private String name;
         private String email;

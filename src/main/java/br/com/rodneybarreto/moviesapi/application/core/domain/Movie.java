@@ -86,6 +86,7 @@ public class Movie {
     }
 
     public static class MovieBuilder {
+
         private Long id;
         private String title;
         private String synopsis;
@@ -117,6 +118,7 @@ public class Movie {
         public Movie build() {
             return new Movie(id, title, synopsis, releaseYear);
         }
+
     }
 
 }
