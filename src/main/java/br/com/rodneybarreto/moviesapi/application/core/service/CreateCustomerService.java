@@ -6,16 +6,15 @@ import br.com.rodneybarreto.moviesapi.application.port.out.persistence.CustomerP
 
 public class CreateCustomerService implements CreateCustomerUseCase {
 
-    private final CustomerPersistence repositoryPort;
+    private final CustomerPersistence customerPersistence;
 
-    public CreateCustomerService(CustomerPersistence repositoryPort) {
-        this.repositoryPort = repositoryPort;
+    public CreateCustomerService(CustomerPersistence customerPersistence) {
+        this.customerPersistence = customerPersistence;
     }
 
     @Override
-    public Long create(Customer customer) {
-        Customer customerSaved = repositoryPort.save(customer);
-        return customerSaved.getId();
+    public Customer create(Customer customer) {
+        return customerPersistence.create(customer);
     }
 
 }

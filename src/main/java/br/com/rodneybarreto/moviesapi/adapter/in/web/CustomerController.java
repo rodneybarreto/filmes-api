@@ -2,9 +2,8 @@ package br.com.rodneybarreto.moviesapi.adapter.in.web;
 
 import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.CustomerRequest;
 import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.CustomerResponse;
-import br.com.rodneybarreto.moviesapi.adapter.mapper.CustomerMapper;
 import br.com.rodneybarreto.moviesapi.application.core.domain.Customer;
-import br.com.rodneybarreto.moviesapi.application.core.service.CreateCustomerService;
+import br.com.rodneybarreto.moviesapi.application.port.in.CreateCustomerUseCase;
 import br.com.rodneybarreto.moviesapi.application.port.in.ReadCustomerUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,26 +23,24 @@ public class CustomerController {
 
     protected static final String RESOURCE = "/v1/customers";
 
-    private final CreateCustomerService createCustomerService;
+    private final CreateCustomerUseCase createCustomerUseCase;
     private final ReadCustomerUseCase readCustomerUseCase;
-    private final CustomerMapper mapper;
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> create(
             @Valid @RequestBody CustomerRequest customerRequest,
-            UriComponentsBuilder uriComponentsBuilder
+            UriComponentsBuilder uriBuilder
     ) {
-        Customer domain = mapper.toDomain(customerRequest);
-        Long customerId = createCustomerService.create(domain);
-        URI uri = uriComponentsBuilder.path(RESOURCE + "/{id}").buildAndExpand(customerId).toUri();
+        Customer customer = CustomerRequest.toDomain(customerRequest);
+        Customer createdCustomer = createCustomerUseCase.create(customer);
+        URI uri = uriBuilder.path(RESOURCE + "/{id}").buildAndExpand(createdCustomer.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<CustomerResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<CustomerResponse> findById(@PathVariable long id) {
         Customer customer = readCustomerUseCase.findById(id);
-        CustomerResponse customerResponse = mapper.toResponse(customer);
-        return ResponseEntity.ok(customerResponse);
+        return ResponseEntity.ok(new CustomerResponse(customer));
     }
 
 }

@@ -13,7 +13,7 @@ public class ReadCustomerService implements ReadCustomerUseCase {
     }
 
     @Override
-    public Customer findById(Long id) {
+    public Customer findById(long id) {
         return customerPersistence.findById(id);
     }
 

@@ -18,6 +18,12 @@ public class Customer {
         this.pixKey = pixKey;
     }
 
+    public Customer(String name, String email, String pixKey) {
+        this.name = name;
+        this.email = email;
+        this.pixKey = pixKey;
+    }
+
     public Long getId() {
         return id;
     }
@@ -72,6 +78,10 @@ public class Customer {
                 '}';
     }
 
+    public static CustomerBuilder builder() {
+        return new CustomerBuilder();
+    }
+
     public static class CustomerBuilder {
         private Long id;
         private String name;
@@ -105,10 +115,6 @@ public class Customer {
             return new Customer(id, name, email, pixKey);
         }
 
-    }
-
-    public static CustomerBuilder builder() {
-        return new CustomerBuilder();
     }
 
 }

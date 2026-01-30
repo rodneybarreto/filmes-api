@@ -4,6 +4,6 @@ import br.com.rodneybarreto.moviesapi.application.core.domain.Customer;
 
 public interface CreateCustomerUseCase {
 
-    Long create(Customer customer);
+    Customer create(Customer customer);
 
 }

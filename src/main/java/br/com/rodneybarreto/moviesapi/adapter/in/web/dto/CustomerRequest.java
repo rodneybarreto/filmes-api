@@ -1,5 +1,6 @@
 package br.com.rodneybarreto.moviesapi.adapter.in.web.dto;
 
+import br.com.rodneybarreto.moviesapi.application.core.domain.Customer;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -16,4 +17,10 @@ public record CustomerRequest(
         @Size(max = 255)
         @JsonAlias("pix_key")
         String pixKey
-) { }
+) {
+
+    public static Customer toDomain(CustomerRequest customerRequest) {
+        return new Customer(customerRequest.name(), customerRequest.email(), customerRequest.pixKey());
+    }
+
+}

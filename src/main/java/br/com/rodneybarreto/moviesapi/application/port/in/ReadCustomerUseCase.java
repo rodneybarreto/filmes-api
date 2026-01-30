@@ -4,6 +4,6 @@ import br.com.rodneybarreto.moviesapi.application.core.domain.Customer;
 
 public interface ReadCustomerUseCase {
 
-    Customer findById(Long id);
+    Customer findById(long id);
 
 }

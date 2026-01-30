@@ -2,19 +2,17 @@ package br.com.rodneybarreto.moviesapi.adapter.out.persistence.entity;
 
 import br.com.rodneybarreto.moviesapi.application.core.domain.Movie;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.apache.commons.lang3.ObjectUtils;
 
 import java.util.Collections;
 import java.util.List;
 
 @Entity
-@Table(name = "movies")
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "movies")
 public class MovieJpaEntity {
 
     @Id
@@ -50,9 +48,7 @@ public class MovieJpaEntity {
     }
 
     public static List<Movie> toDomain(List<MovieJpaEntity> movies) {
-        if (ObjectUtils.isEmpty(movies))
-            return Collections.emptyList();
-
+        if (movies == null) return Collections.emptyList();
         return movies.stream().map(MovieJpaEntity::toDomain).toList();
     }
 
