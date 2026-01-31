@@ -39,12 +39,10 @@ public class MoviePersistenceAdapter implements MoviePersistence {
     public PageResponse<Movie> findAll(int pageNumber, int pageSize, String sortOrder, String sortBy, String searchTerm) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.valueOf(sortOrder), sortBy));
 
-        Page<MovieJpaEntity> page;
-        if (searchTerm == null || searchTerm.isBlank()) {
-            page = movieJpaRepository.findAll(pageable);
-        } else {
-            page = movieJpaRepository.findByTitleContainsIgnoreCase(searchTerm, pageable);
-        }
+        Page<MovieJpaEntity> page = (searchTerm == null || searchTerm.isBlank())
+                ? movieJpaRepository.findAll(pageable)
+                : movieJpaRepository.findByTitleContainsIgnoreCase(searchTerm, pageable);
+
         return new PageResponse<>(
                 MovieJpaEntity.toDomain(page.getContent()),
                 page.getNumber(),
