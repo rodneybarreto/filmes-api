@@ -55,4 +55,27 @@ class CustomerRequestTest {
         assertThat(violations.iterator().next().getMessage()).isEqualTo("The pix key must be less than 255 characters");
     }
 
+    @Test
+    @DisplayName("O email do cliente deve ser válido")
+    void scenario_4() {
+        var customerRequest = new CustomerRequest("Jhon Doe", "email", "01234567");
+
+        Set<ConstraintViolation<CustomerRequest>> violations = validator.validate(customerRequest);
+
+        assertThat(violations).isNotEmpty();
+        assertThat(violations.iterator().next().getMessage()).isEqualTo("The email must be valid");
+    }
+
+    @Test
+    @DisplayName("O email do cliente deve ter no máximo 255 caracteres")
+    void scenario_5() {
+        var email = "a".repeat(256);
+        var customerRequest = new CustomerRequest("Jhon Doe", email, "01234567");
+
+        Set<ConstraintViolation<CustomerRequest>> violations = validator.validate(customerRequest);
+
+        assertThat(violations).isNotEmpty();
+        assertThat(violations.iterator().next().getMessage()).isEqualTo("The email must be less than 255 characters");
+    }
+
 }
