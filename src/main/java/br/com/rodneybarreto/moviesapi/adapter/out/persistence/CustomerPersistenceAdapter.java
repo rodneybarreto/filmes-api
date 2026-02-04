@@ -24,7 +24,7 @@ public class CustomerPersistenceAdapter implements CustomerPersistence {
     }
 
     @Override
-    public Customer findById(Long id) {
+    public Customer findById(long id) {
         return customerJpaRepository.findById(id)
                 .map(CustomerJpaEntity::toDomain)
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found"));

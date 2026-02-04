@@ -32,7 +32,7 @@ public class MovieJpaEntity {
     @Getter
     @Setter
     @Column(name = "release_year")
-    private Integer releaseYear;
+    private int releaseYear;
 
     public static MovieJpaEntity of(Movie movie) {
         return new MovieJpaEntity(movie.getId(), movie.getTitle(), movie.getSynopsis(), movie.getReleaseYear());

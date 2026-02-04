@@ -6,7 +6,7 @@ import lombok.Builder;
 
 @Builder
 public record CustomerResponse(
-        Long id,
+        long id,
 
         String name,
 

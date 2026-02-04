@@ -66,14 +66,14 @@ public class MovieControllerAdapter {
     }
 
     @PutMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> update(@PathVariable Long id, @Valid @RequestBody MovieRequest movieRequest) {
+    public ResponseEntity<Void> update(@PathVariable long id, @Valid @RequestBody MovieRequest movieRequest) {
         Movie movie = MovieRequest.toDomain(movieRequest);
         movieUseCasePort.updateMovie(id, movie);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable long id) {
         movieUseCasePort.deleteMovie(id);
         return ResponseEntity.noContent().build();
     }

@@ -29,7 +29,7 @@ public class MoviePersistenceAdapter implements MoviePersistence {
     }
 
     @Override
-    public Movie findById(Long id) {
+    public Movie findById(long id) {
         return movieJpaRepository.findById(id)
                 .map(MovieJpaEntity::toDomain)
                 .orElseThrow(() -> new EntityNotFoundException("Movie not found"));
@@ -54,7 +54,7 @@ public class MoviePersistenceAdapter implements MoviePersistence {
 
     @Override
     @Transactional
-    public void update(Long id, Movie movie) {
+    public void update(long id, Movie movie) {
         movieJpaRepository.findById(id).ifPresent(entity -> {
             entity.setTitle(movie.getTitle());
             entity.setSynopsis(movie.getSynopsis());
@@ -65,7 +65,7 @@ public class MoviePersistenceAdapter implements MoviePersistence {
 
     @Override
     @Transactional
-    public void deleteById(Long id) {
+    public void deleteById(long id) {
         movieJpaRepository.deleteById(id);
     }
 

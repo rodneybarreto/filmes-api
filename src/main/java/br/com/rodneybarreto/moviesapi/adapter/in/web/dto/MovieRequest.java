@@ -13,7 +13,7 @@ public record MovieRequest(
         String synopsis,
 
         @JsonAlias("release_year")
-        Integer releaseYear
+        int releaseYear
 ) {
 
     public static Movie toDomain(MovieRequest movieRequest) {

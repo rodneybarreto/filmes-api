@@ -6,6 +6,6 @@ public interface CustomerPersistence {
 
     Customer create(Customer customer);
 
-    Customer findById(Long id);
+    Customer findById(long id);
 
 }

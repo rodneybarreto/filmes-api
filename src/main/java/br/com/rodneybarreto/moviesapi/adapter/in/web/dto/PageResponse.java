@@ -17,7 +17,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PageResponse<T> {
 
-    private T t;
+    private T type;
     private List<T> content;
     private int pageNumber;
     private int pageSize;
@@ -25,7 +25,7 @@ public class PageResponse<T> {
     private long totalElements;
 
     public PageResponse() {
-        this.t = null;
+        this.type = null;
         this.content = Collections.emptyList();
         this.pageNumber = 0;
         this.pageSize = 0;
@@ -33,8 +33,8 @@ public class PageResponse<T> {
         this.totalElements = 0L;
     }
 
-    public PageResponse(T t, List<T> content, int pageNumber, int pageSize, int totalPages, long totalElements) {
-        this.t = t;
+    public PageResponse(T type, List<T> content, int pageNumber, int pageSize, int totalPages, long totalElements) {
+        this.type = type;
         this.content = content;
         this.pageNumber = Optional.of(pageNumber).orElse(0);
         this.pageSize = Optional.of(pageSize).orElse(0);
@@ -43,7 +43,7 @@ public class PageResponse<T> {
     }
 
     public PageResponse(List<T> content, int pageNumber, int pageSize, int totalPages, long totalElements) {
-        this.t = null;
+        this.type = null;
         this.content = content;
         this.pageNumber = Optional.of(pageNumber).orElse(0);
         this.pageSize = Optional.of(pageSize).orElse(0);

@@ -7,12 +7,12 @@ public interface MoviePersistence {
 
     Movie create(Movie movie);
 
-    Movie findById(Long id);
+    Movie findById(long id);
 
     PageResponse<Movie> findAll(int pageNumber, int pageSize, String sortOrder, String sortBy, String searchTerm);
 
-    void update(Long id, Movie movie);
+    void update(long id, Movie movie);
 
-    void deleteById(Long id);
+    void deleteById(long id);
 
 }
