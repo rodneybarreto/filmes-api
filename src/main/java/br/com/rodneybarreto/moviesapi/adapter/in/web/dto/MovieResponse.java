@@ -24,7 +24,9 @@ public record MovieResponse(
     }
 
     public static List<MovieResponse> toList(List<Movie> movies) {
-        if (movies == null) return Collections.emptyList();
+        if (movies == null || movies.isEmpty()) {
+            return Collections.emptyList();
+        }
         return movies.stream().map(MovieResponse::new).toList();
     }
 
