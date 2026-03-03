@@ -6,7 +6,6 @@ import br.com.rodneybarreto.moviesapi.adapter.out.persistence.repository.MovieJp
 import br.com.rodneybarreto.moviesapi.application.core.domain.Movie;
 import br.com.rodneybarreto.moviesapi.application.port.out.persistence.MoviePersistence;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,10 +14,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
-@RequiredArgsConstructor
 public class MoviePersistenceAdapter implements MoviePersistence {
 
     private final MovieJpaRepository movieJpaRepository;
+
+    public MoviePersistenceAdapter(MovieJpaRepository movieJpaRepository) {
+        this.movieJpaRepository = movieJpaRepository;
+    }
 
     @Override
     @Transactional

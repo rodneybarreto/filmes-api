@@ -6,18 +6,27 @@ import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.PageResponse;
 import br.com.rodneybarreto.moviesapi.application.core.domain.Movie;
 import br.com.rodneybarreto.moviesapi.application.port.in.MovieUseCasePort;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping(MovieControllerAdapter.MOVIE_RESOURCE)
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MovieControllerAdapter {
@@ -25,6 +34,10 @@ public class MovieControllerAdapter {
     public static final String MOVIE_RESOURCE = "/v1/movies";
 
     private final MovieUseCasePort movieUseCasePort;
+
+    public MovieControllerAdapter(MovieUseCasePort movieUseCasePort) {
+        this.movieUseCasePort = movieUseCasePort;
+    }
 
     @InitBinder
     public void initBinder(final WebDataBinder binder) {
@@ -54,9 +67,10 @@ public class MovieControllerAdapter {
             @RequestParam(required = false) String searchTerm
     ) {
         PageResponse<Movie> page = movieUseCasePort.findAllMovies(pageNumber, pageSize, sortOrder, sortBy, searchTerm);
+        List<MovieResponse> list = MovieResponse.toList(page.getContent());
         return ResponseEntity.ok(
                 new PageResponse<>(
-                        MovieResponse.toList(page.getContent()),
+                        list,
                         page.getPageNumber(),
                         page.getPageSize(),
                         page.getTotalPages(),

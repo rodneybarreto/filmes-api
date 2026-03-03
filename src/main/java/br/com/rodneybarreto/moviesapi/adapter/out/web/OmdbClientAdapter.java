@@ -2,13 +2,11 @@ package br.com.rodneybarreto.moviesapi.adapter.out.web;
 
 import br.com.rodneybarreto.moviesapi.application.core.domain.Movie;
 import br.com.rodneybarreto.moviesapi.application.port.out.web.FindRestClientPort;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
 @Component
-@RequiredArgsConstructor
 public class OmdbClientAdapter implements FindRestClientPort {
 
     /**
@@ -29,6 +27,10 @@ public class OmdbClientAdapter implements FindRestClientPort {
      */
 
     private final RestClient restClient;
+
+    public OmdbClientAdapter(RestClient restClient) {
+        this.restClient = restClient;
+    }
 
     @Override
     public Movie findByTitle(String title) {

@@ -6,14 +6,16 @@ import br.com.rodneybarreto.moviesapi.application.core.domain.Customer;
 import br.com.rodneybarreto.moviesapi.application.port.out.persistence.CustomerPersistence;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class CustomerPersistenceAdapter implements CustomerPersistence {
 
     private final CustomerJpaRepository customerJpaRepository;
+
+    public CustomerPersistenceAdapter(CustomerJpaRepository customerJpaRepository) {
+        this.customerJpaRepository = customerJpaRepository;
+    }
 
     @Override
     @Transactional

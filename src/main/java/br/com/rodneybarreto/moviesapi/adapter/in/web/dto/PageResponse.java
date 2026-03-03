@@ -2,8 +2,6 @@ package br.com.rodneybarreto.moviesapi.adapter.in.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Builder;
-import lombok.Data;
 
 import java.util.Collections;
 import java.util.List;
@@ -11,8 +9,6 @@ import java.util.Optional;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
-@Data
-@Builder
 @JsonInclude(NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PageResponse<T> {
@@ -49,6 +45,54 @@ public class PageResponse<T> {
         this.pageSize = Optional.of(pageSize).orElse(0);
         this.totalPages = Optional.of(totalPages).orElse(0);
         this.totalElements = Optional.of(totalElements).orElse(0L);
+    }
+
+    public T getType() {
+        return type;
+    }
+
+    public void setType(T type) {
+        this.type = type;
+    }
+
+    public List<T> getContent() {
+        return content;
+    }
+
+    public void setContent(List<T> content) {
+        this.content = content;
+    }
+
+    public int getPageNumber() {
+        return pageNumber;
+    }
+
+    public void setPageNumber(int pageNumber) {
+        this.pageNumber = pageNumber;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(int totalPages) {
+        this.totalPages = totalPages;
+    }
+
+    public long getTotalElements() {
+        return totalElements;
+    }
+
+    public void setTotalElements(long totalElements) {
+        this.totalElements = totalElements;
     }
 
 }

@@ -3,13 +3,15 @@ package br.com.rodneybarreto.moviesapi.adapter.out.persistence.converter;
 import br.com.rodneybarreto.moviesapi.infrastructure.helper.AESHelper;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import lombok.RequiredArgsConstructor;
 
 @Converter
-@RequiredArgsConstructor
 public class CryptoConverter implements AttributeConverter<String, String> {
 
     private final AESHelper aesHelper;
+
+    public CryptoConverter(AESHelper aesHelper) {
+        this.aesHelper = aesHelper;
+    }
 
     @Override
     public String convertToDatabaseColumn(String value) {

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CustomerRequestTest {
 
@@ -75,7 +76,7 @@ class CustomerRequestTest {
         Set<ConstraintViolation<CustomerRequest>> violations = validator.validate(customerRequest);
 
         assertThat(violations).isNotEmpty();
-        assertThat(violations.iterator().next().getMessage()).isEqualTo("The email must be less than 255 characters");
+        assertTrue(violations.stream().anyMatch(v -> v.getMessage().equals("The email must be less than 255 characters")));
     }
 
 }
