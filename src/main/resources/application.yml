@@ -2,8 +2,6 @@ server:
     port: 8081
     servlet:
         context-path: /movies-api
-    error:
-        include-stacktrace: never
     compression:
         enabled: true
         mime-types: application/json
@@ -29,6 +27,9 @@ spring:
                 transaction:
                     jta:
                         platform: false
+    web:
+        error:
+            include-stacktrace: never
 
 # Omdb API
 # The OMDb API is a RESTful web service to obtain movie information, all

@@ -4,7 +4,9 @@ import br.com.rodneybarreto.moviesapi.adapter.in.web.dto.PageResponse;
 import br.com.rodneybarreto.moviesapi.application.core.domain.Movie;
 import br.com.rodneybarreto.moviesapi.application.port.in.MovieUseCasePort;
 import br.com.rodneybarreto.moviesapi.application.port.out.persistence.MoviePersistence;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MovieUseCase implements MovieUseCasePort {
 
     private final MoviePersistence moviePersistence;

@@ -15,8 +15,8 @@ public class OmdbRestClientConfig {
     private String apiKey;
 
     @Bean
-    public RestClient restClient(RestClient.Builder builder) {
-        return builder.baseUrl(baseUrl + "/?apikey=" + apiKey).build();
+    public RestClient restClient() {
+        return RestClient.builder().baseUrl(baseUrl + "/?apikey=" + apiKey).build();
     }
 
 }

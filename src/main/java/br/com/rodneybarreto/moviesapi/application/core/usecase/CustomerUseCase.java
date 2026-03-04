@@ -3,7 +3,9 @@ package br.com.rodneybarreto.moviesapi.application.core.usecase;
 import br.com.rodneybarreto.moviesapi.application.core.domain.Customer;
 import br.com.rodneybarreto.moviesapi.application.port.in.CustomerUseCasePort;
 import br.com.rodneybarreto.moviesapi.application.port.out.persistence.CustomerPersistence;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CustomerUseCase implements CustomerUseCasePort {
 
     private final CustomerPersistence customerPersistence;
